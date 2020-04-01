@@ -1,18 +1,21 @@
 MyGame.screens['gameplay'] = (function(game, graphics) {
     let lastTime;
+    let rows;
+    let board;
 
     function processInput(elapsedTime) {
 
     }
 
     function update(elapsedTime) {
-
+        board.update(elapsedTime);
     }
 
     function render() {
         graphics.clear();
         graphics.drawBackground();
-        graphics.drawLines();
+        //graphics.drawLines(rows);
+        board.render();
     }
 
     function gameLoop(time) {
@@ -28,11 +31,13 @@ MyGame.screens['gameplay'] = (function(game, graphics) {
     }
 
     function run() {
+        board = new Board(graphics.width, graphics.height, rows);
         lastTime = performance.now();
         requestAnimationFrame(gameLoop);
     }
 
     function initialize() {
+        rows = 15;
         graphics.initalize();
     }
 

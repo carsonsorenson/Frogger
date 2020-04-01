@@ -2,7 +2,8 @@ MyGame = {
     screens: {},
     objects: {},
     render: {},
-    assets: {}
+    assets: {},
+    objects: {},
 }
 
 MyGame.loader = (function() {
@@ -12,11 +13,15 @@ MyGame.loader = (function() {
             message: 'Main menu loaded'
         },
         {
+            scripts: ['objects/gameSprites'],
+            message: 'Objects loaded',
+        },
+        {
             scripts: ['render/graphics'],
             message: 'Graphics loaded'
         },
         {
-            scripts: ['gameplay/main'],
+            scripts: ['gameplay/cars', 'gameplay/board', 'gameplay/main'],
             message: 'Main gameplay loaded'
         }
     ];
@@ -29,6 +34,10 @@ MyGame.loader = (function() {
         {
             key: 'sprites',
             source: '/assets/gameSprites.png'
+        },
+        {
+            key: 'frogSprite',
+            source: '/assets/frogSprites.png'
         }
     ];
 
