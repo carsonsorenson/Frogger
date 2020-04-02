@@ -22,6 +22,8 @@ MyGame.screens['gameplay'] = (function(game, graphics) {
         let elapsedTime = time - lastTime;
         lastTime = time;
 
+        console.log(1000 / elapsedTime);
+
         processInput(elapsedTime);
         update(elapsedTime);
         render();
@@ -31,7 +33,7 @@ MyGame.screens['gameplay'] = (function(game, graphics) {
     }
 
     function run() {
-        board = new Board(graphics.width, graphics.height, rows);
+        board = new Board(rows);
         lastTime = performance.now();
         requestAnimationFrame(gameLoop);
     }

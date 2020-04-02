@@ -1,62 +1,51 @@
 class Board {
-    constructor(width, height, numLanes) {
-        this.width = width;
-        this.height = height;
-        this.numLanes = numLanes;
-
-        this.semiTime = 5000;
-        this.semiMoveRate = this.width / (10 * 1000);
-        this.semiOneElapsed = Math.floor(Math.random() * this.semiTime);
-        this.semiTwoElapsed = Math.floor(Math.random() * this.semiTime);
-
-        this.fireTruckTime = 4000;
-        this.fireTruckMoveRate = this.width / (8 * 1000);
-        this.fireTruckElapsed = Math.floor(Math.random() * this.fireTruckTime);
-
-        this.carTime = 3000;
-        this.carMoveRate = this.width / (6 * 1000);
-        this.carOneElapsed = Math.floor(Math.random() * this.carTime);
-        this.carTwoElapsed = Math.floor(Math.random() * this.carTime);
-
+    constructor(numLanes) {
         this.objects = [];
+        this.width = MyGame.graphics.width;
+        this.height = MyGame.graphics.height;
+        this.numLanes = numLanes;
+        this.laneHeight = this.height / this.numLanes; 
+
+        this.lanes = []
+        this.lanes.push(this.generateObject(8, 5000, 10 * 1000, MyGame.objects.sprites.getSemi, Math.PI));
+        this.lanes.push(this.generateObject(9, 4000, 8 * 1000, MyGame.objects.sprites.getFireTruck, 0));
+        this.lanes.push(this.generateObject(10, 3000, 6 * 1000, MyGame.objects.sprites.getRandomCar, Math.PI));
+        this.lanes.push(this.generateObject(11, 5000, 10 * 1000, MyGame.objects.sprites.getSemi, 0));
+        this.lanes.push(this.generateObject(12, 3000, 6 * 1000, MyGame.objects.sprites.getRandomCar, Math.PI));
+
+        window.addEventListener('resize', () => this.resize(MyGame.graphics.width, MyGame.graphics.height));
+    }
+
+    getY(laneNumber) {
+        return laneNumber * (this.height / this.numLanes) + (this.laneHeight / 2);
+    }
+
+    generateObject(laneNumber, respawnRate, moveRate, obj, rotation) {
+        let elapsedTime = Math.floor(Math.random() * respawnRate);
+        let center = {x: 0, y: this.getY(laneNumber)};
+        if (rotation != 0) {
+            center.x = this.width;
+        }
+
+        return {
+            laneNumber,
+            respawnRate,
+            moveRate,
+            obj,
+            rotation,
+            elapsedTime,
+            center
+        }
     }
 
     update(elapsedTime) {
-        this.semiOneElapsed += elapsedTime;
-        this.semiTwoElapsed += elapsedTime;
-        this.fireTruckElapsed += elapsedTime;
-        this.carOneElapsed += elapsedTime;
-        this.carTwoElapsed += elapsedTime;
-
-        if (this.semiOneElapsed > this.semiTime) {
-            this.semiOneElapsed = 0;
-            this.objects.push(
-                new Car(MyGame.graphics, MyGame.objects.sprites, 8, this.semiMoveRate, this.numLanes, this.width, this.height)
-            );
-        }
-        if (this.semiTwoElapsed > this.semiTime) {
-            this.semiTwoElapsed = 0;
-            this.objects.push(
-                new Car(MyGame.graphics, MyGame.objects.sprites, 11, this.semiMoveRate, this.numLanes, this.width, this.height)
-            );
-        }
-        if (this.fireTruckElapsed > this.fireTruckTime) {
-            this.fireTruckElapsed = 0;
-            this.objects.push(
-                new Car(MyGame.graphics, MyGame.objects.sprites, 9, this.fireTruckMoveRate, this.numLanes, this.width, this.height)
-            );
-        }
-        if (this.carOneElapsed > this.carTime) {
-            this.carOneElapsed = 0;
-            this.objects.push(
-                new Car(MyGame.graphics, MyGame.objects.sprites, 10, this.carMoveRate, this.numLanes, this.width, this.height)
-            );
-        }
-        if (this.carTwoElapsed > this.carTime) {
-            this.carTwoElapsed = 0;
-            this.objects.push(
-                new Car(MyGame.graphics, MyGame.objects.sprites, 12, this.carMoveRate, this.numLanes, this.width, this.height)
-            );
+        for (let i = 0; i < this.lanes.length; i++) {
+            this.lanes[i].elapsedTime += elapsedTime;
+            if (this.lanes[i].elapsedTime > this.lanes[i].respawnRate) {
+                this.lanes[i].elapsedTime = 0;
+                let newCar = new Car(this.lanes[i], this.laneHeight, this.width);
+                this.objects.push(newCar);
+            }
         }
 
         for (let i = this.objects.length - 1; i >= 0; i--) {
@@ -71,10 +60,31 @@ class Board {
         }
     }
 
-    render() {
+    resize(width, height) {
+        this.height = height;
+        this.laneHeight = this.height / this.numLanes; 
         for (let i = 0; i < this.objects.length; i++) {
-            this.objects[i].render();
+            let y = this.getY(this.objects[i].laneNumber);
+            let x = width * (this.objects[i].center.x / this.width);
+            this.objects[i].center.y = y;
+            this.objects[i].center.x = x;
+            this.objects[i].resize(width, this.laneHeight);
+        }
+        this.width = width;
+
+        for (let i = 0; i < this.lanes.length; i++) {
+            let y = this.getY(this.lanes[i].laneNumber);
+            this.lanes[i].center.y = y;
+            this.lanes[i].center.x = 0;
+            if (this.lanes[i].rotation != 0) {
+                this.lanes[i].center.x = this.width;
+            }
         }
     }
 
+    render() {
+        for (let i = 0; i < this.objects.length; i++) {
+            this.objects[i].render(MyGame.graphics.drawSprite);
+        }
+    }
 }
