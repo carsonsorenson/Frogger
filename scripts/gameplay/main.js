@@ -1,5 +1,5 @@
 MyGame.screens['gameplay'] = (function(game, graphics) {
-    let lastTime;
+    let lastTime
     let rows;
     let board;
 
@@ -22,7 +22,10 @@ MyGame.screens['gameplay'] = (function(game, graphics) {
         let elapsedTime = time - lastTime;
         lastTime = time;
 
-        console.log(1000 / elapsedTime);
+        let fps = 1000 / elapsedTime;
+        if (fps < 50) {
+            console.log('here!!');
+        }
 
         processInput(elapsedTime);
         update(elapsedTime);

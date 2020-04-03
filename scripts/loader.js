@@ -21,7 +21,7 @@ MyGame.loader = (function() {
             message: 'Graphics loaded'
         },
         {
-            scripts: ['gameplay/cars', 'gameplay/board', 'gameplay/main'],
+            scripts: ['gameplay/car', 'gameplay/log', 'gameplay/turtle', 'gameplay/board','gameplay/main'],
             message: 'Main gameplay loaded'
         }
     ];

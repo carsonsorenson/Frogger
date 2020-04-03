@@ -8,23 +8,27 @@ MyGame.objects.sprites = (function(assets) {
         {image: assets.sprites, x: 305, y: 6 * spriteHeight, width: 135, height: spriteHeight}
     ];
 
-    function getLogs() {
-        return [
-            {image: assets.sprites, x: 10, y: 3 * spriteHeight, width: 360, height: spriteHeight},
-            {image: assets.sprites, x: 385, y: 3 * spriteHeight, width: 190, height: spriteHeight},
-            {image: assets.sprites, x: 10, y: 4 * spriteHeight, width: 280, height: spriteHeight}
-        ];
+    function getShortLog() {
+        return {image: assets.sprites, x: 385, y: 3 * spriteHeight + 15, width: 190, height: spriteHeight - 15};
+    }
+
+    function getMediumLog() {
+        return {image: assets.sprites, x: 10, y: 4 * spriteHeight + 5, width: 280, height: spriteHeight - 15};
+    }
+
+    function getLongLog() {
+        return {image: assets.sprites, x: 10, y: 3 * spriteHeight + 15, width: 360, height: spriteHeight - 15};
     }
 
     function getTurtles() {
         return [
-            {image: assets.sprites, x: 400, y: 0, width: 74, height: spriteHeight},
-            {image: assets.sprites, x: 474, y: 0, width: 74, height: spriteHeight},
-            {image: assets.sprites, x: 5, y: spriteHeight, width: 74, height: spriteHeight},
-            {image: assets.sprites, x: 79, y: spriteHeight, width: 74, height: spriteHeight},
-            {image: assets.sprites, x: 153, y: spriteHeight, width: 74, height: spriteHeight},
-            {image: assets.sprites, x: 227, y: spriteHeight, width: 74, height: spriteHeight},
-            {image: assets.sprites, x: 301, y: spriteHeight, width: 74, height: spriteHeight}
+            {image: assets.sprites, x: 400, y: 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 474, y: 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 5, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 79, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 153, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 227, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 301, y: spriteHeight + 5, width: 74, height: spriteHeight - 15}
         ];
     }
 
@@ -71,7 +75,9 @@ MyGame.objects.sprites = (function(assets) {
     }
 
     return {
-        getLogs,
+        getShortLog,
+        getMediumLog,
+        getLongLog,
         getTurtles,
         getTurtlesDiving,
         getRandomCar,

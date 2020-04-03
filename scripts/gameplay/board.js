@@ -4,80 +4,54 @@ class Board {
         this.width = MyGame.graphics.width;
         this.height = MyGame.graphics.height;
         this.numLanes = numLanes;
-        this.laneHeight = this.height / this.numLanes; 
-
-        this.lanes = []
-        this.lanes.push(this.generateObject(8, 5000, 10 * 1000, MyGame.objects.sprites.getSemi, Math.PI));
-        this.lanes.push(this.generateObject(9, 4000, 8 * 1000, MyGame.objects.sprites.getFireTruck, 0));
-        this.lanes.push(this.generateObject(10, 3000, 6 * 1000, MyGame.objects.sprites.getRandomCar, Math.PI));
-        this.lanes.push(this.generateObject(11, 5000, 10 * 1000, MyGame.objects.sprites.getSemi, 0));
-        this.lanes.push(this.generateObject(12, 3000, 6 * 1000, MyGame.objects.sprites.getRandomCar, Math.PI));
+        this.laneHeight = this.height / this.numLanes;
 
         window.addEventListener('resize', () => this.resize(MyGame.graphics.width, MyGame.graphics.height));
+
+        let sprites = MyGame.objects.sprites;
+        this.lanes = [
+            {laneNumber: 1, constructor: Log, moveRate: 10000, respawnRate: 2750, obj: sprites.getMediumLog, rotation: 0, start: 'left'},
+            {laneNumber: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: sprites.getTurtles, rotation: Math.PI, start: 'right'},
+            {laneNumber: 3, constructor: Log, moveRate: 8000, respawnRate: 3000, obj: sprites.getLongLog, rotation: 0, start: 'left'},
+            {laneNumber: 4, constructor: Log, moveRate: 14000, respawnRate: 2500, obj: sprites.getShortLog, rotation: 0, start: 'left'},
+            {laneNumber: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: sprites.getTurtles, rotation: Math.PI, start: 'right'},
+            {laneNumber: 8, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: sprites.getSemi, rotation: Math.PI, start: 'right'},
+            {laneNumber: 9, constructor: Car, moveRate: 8000, respawnRate: 4000, obj: sprites.getFireTruck, rotation: 0, start: 'left'},
+            {laneNumber: 10, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: sprites.getRandomCar, rotation: Math.PI, start: 'right'},
+            {laneNumber: 11, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: sprites.getSemi, rotation: 0, start: 'left'},
+            {laneNumber: 12, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: sprites.getRandomCar, rotation: Math.PI, start: 'right'}
+        ];
+
+        for (let i = 0; i < this.lanes.length; i++) {
+            this.lanes[i].elapsedTime = Math.floor(Math.random() * this.lanes[i].respawnRate);
+            this.lanes[i].center = {x: null, y: null};
+            this.lanes[i].center.y = this.getY(this.lanes[i].laneNumber, this.height);
+            this.lanes[i].start == 'left' ? this.lanes[i].center.x = 0 : this.lanes[i].center.x = this.width;
+        }
     }
 
-    getY(laneNumber) {
-        return laneNumber * (this.height / this.numLanes) + (this.laneHeight / 2);
-    }
-
-    generateObject(laneNumber, respawnRate, moveRate, obj, rotation) {
-        let elapsedTime = Math.floor(Math.random() * respawnRate);
-        let center = {x: 0, y: this.getY(laneNumber)};
-        if (rotation != 0) {
-            center.x = this.width;
-        }
-
-        return {
-            laneNumber,
-            respawnRate,
-            moveRate,
-            obj,
-            rotation,
-            elapsedTime,
-            center
-        }
+    getY(laneNumber, height) {
+        return laneNumber * (height / this.numLanes) + (this.laneHeight / 2);
     }
 
     update(elapsedTime) {
         for (let i = 0; i < this.lanes.length; i++) {
-            this.lanes[i].elapsedTime += elapsedTime;
+            this.lanes[i].elapsedTime += elapsedTime;;
             if (this.lanes[i].elapsedTime > this.lanes[i].respawnRate) {
                 this.lanes[i].elapsedTime = 0;
-                let newCar = new Car(this.lanes[i], this.laneHeight, this.width);
-                this.objects.push(newCar);
+                this.objects.push(new this.lanes[i].constructor(this.lanes[i], this.laneHeight));
             }
         }
-
+        
         for (let i = this.objects.length - 1; i >= 0; i--) {
-            let x = this.objects[i].center.x;
-            let w = this.objects[i].size.width;
+            let x = this.objects[i].getCenter().x;
+            let w = this.objects[i].getSize().width;
             if (x < 0 - (w / 2) || x > this.width + (w / 2)) {
+                this.objects[i] = null;
                 this.objects.splice(i, 1);
             }
             else {
-                this.objects[i].update(elapsedTime);
-            }
-        }
-    }
-
-    resize(width, height) {
-        this.height = height;
-        this.laneHeight = this.height / this.numLanes; 
-        for (let i = 0; i < this.objects.length; i++) {
-            let y = this.getY(this.objects[i].laneNumber);
-            let x = width * (this.objects[i].center.x / this.width);
-            this.objects[i].center.y = y;
-            this.objects[i].center.x = x;
-            this.objects[i].resize(width, this.laneHeight);
-        }
-        this.width = width;
-
-        for (let i = 0; i < this.lanes.length; i++) {
-            let y = this.getY(this.lanes[i].laneNumber);
-            this.lanes[i].center.y = y;
-            this.lanes[i].center.x = 0;
-            if (this.lanes[i].rotation != 0) {
-                this.lanes[i].center.x = this.width;
+                this.objects[i].update(elapsedTime, this.width);
             }
         }
     }
@@ -86,5 +60,23 @@ class Board {
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].render(MyGame.graphics.drawSprite);
         }
+    }
+
+    resize(width, height) {
+        this.laneHeight = height / this.numLanes;
+        for (let i = 0; i < this.objects.length; i++) {
+            this.objects[i].setSize(this.laneHeight);
+            let y = this.getY(this.objects[i].laneNumber, height);
+            let x = width * (this.objects[i].getCenter().x / this.width);
+            this.objects[i].setCenter(x, y);
+        }
+
+        for (let i = 0; i < this.lanes.length; i++) {
+            this.lanes[i].center.y = this.getY(this.lanes[i].laneNumber, height);
+            this.lanes[i].start == 'left' ? this.lanes[i].center.x = 0 : this.lanes[i].center.x = width;
+        }
+
+        this.width = width;
+        this.height = height;
     }
 }

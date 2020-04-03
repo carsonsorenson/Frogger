@@ -1,26 +1,42 @@
 class Car {
-    constructor(spec, laneHeight, width) {
+    constructor(spec, laneHeight) {
         this.car = spec.obj();
+        this.moveRate = spec.moveRate;
         this.center = {...spec.center};
         this.rotation = spec.rotation;
-        this.origMoveRate = spec.moveRate;
-        this.moveRate = width / this.origMoveRate;
         this.laneNumber = spec.laneNumber;
 
+        this.setSize(laneHeight);
+    }
+
+    setSize(laneHeight) {
         let scalingFactor = laneHeight / this.car.height;
         this.size = {
             width: this.car.width * scalingFactor,
             height: this.car.height * scalingFactor
-        };
+        }
     }
 
-    update(elapsedTime) {
+    setCenter(x, y) {
+        this.center.x = x;
+        this.center.y = y;
+    }
+
+    update(elapsedTime, width) {
         if (this.rotation == 0) {
-            this.center.x += this.moveRate * elapsedTime;
+            this.center.x += (width / this.moveRate) * elapsedTime;
         }
         else {
-            this.center.x -= this.moveRate * elapsedTime;
+            this.center.x -= (width / this.moveRate) * elapsedTime;
         }
+    }
+
+    getSize() {
+        return this.size;
+    }
+
+    getCenter() {
+        return this.center;
     }
 
     render(drawSprite) {
@@ -30,14 +46,5 @@ class Car {
             this.size,
             this.rotation
         );
-    }
-
-    resize(width, laneHeight) {
-        this.moveRate = width / this.origMoveRate;
-        let scalingFactor = laneHeight / this.car.height;
-        this.size = {
-            width: this.car.width * scalingFactor,
-            height: this.car.height * scalingFactor
-        };
     }
 }
