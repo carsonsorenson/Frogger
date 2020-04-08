@@ -1,5 +1,5 @@
 class Board {
-    constructor(numRows, numCols) {
+    constructor(numRows, numCols, keyBindings) {
         this.objects = [];
         this.width = MyGame.graphics.width;
         this.height = MyGame.graphics.height;
@@ -35,22 +35,20 @@ class Board {
         }
 
         this.bindings = {
-            'a': (elapsedTime) => this.frog.moveLeft(elapsedTime),
-            'w': (elapsedTime) => this.frog.moveUp(elapsedTime),
-            'd': (elapsedTime) => this.frog.moveRight(elapsedTime),
-            's': (elapsedTime) => this.frog.moveDown(elapsedTime)
-        };
+            [keyBindings.left]: (elapsedTime) => this.frog.moveLeft(elapsedTime),
+            [keyBindings.up]: (elapsedTime) => this.frog.moveUp(elapsedTime),
+            [keyBindings.right]: (elapsedTime) => this.frog.moveRight(elapsedTime),
+            [keyBindings.down]: (elapsedTime) => this.frog.moveDown(elapsedTime)
+        }
     }
 
     getY(laneNumber, height) {
         return laneNumber * (height / this.numRows) + (this.laneHeight / 2);
     }
 
-    processInput(inputBuffer, elapsedTime) {
-        for (let key in inputBuffer) {
-            if (key in this.bindings) {
-                this.bindings[key](elapsedTime);
-            }
+    processInput(key, elapsedTime) {
+        if (key in this.bindings) {
+            this.bindings[key](elapsedTime);
         }
     }
 

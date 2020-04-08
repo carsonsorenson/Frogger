@@ -1,13 +1,21 @@
-MyGame.screens['gameplay'] = (function(game, graphics, input) {
+MyGame.screens['gameplay'] = (function() {
     let lastTime
     let rows;
     let cols;
     let board;
     let myInput;
     let totalTime;
+    let paused;
 
     function processInput(elapsedTime) {
-        board.processInput(myInput.inputBuffer, elapsedTime);
+        for (let key in myInput.inputBuffer) {
+            if (key === MyGame.persistence.keyBindings.pause) {
+                paused = !paused;
+            }
+            else {
+                board.processInput(key, elapsedTime);
+            }
+        }
     }
 
     function update(elapsedTime) {
@@ -16,8 +24,8 @@ MyGame.screens['gameplay'] = (function(game, graphics, input) {
     }
 
     function render() {
-        graphics.clear();
-        graphics.drawBackground();
+        MyGame.graphics.clear();
+        MyGame.graphics.drawBackground();
         board.render();
         //graphics.drawLines(rows);
     }
@@ -36,23 +44,23 @@ MyGame.screens['gameplay'] = (function(game, graphics, input) {
             console.log(fps);
         }
 
-        if (board.frog.alive) {
+        if (board.frog.alive && !paused) {
             requestAnimationFrame(gameLoop);
         }
     }
 
     function run() {
-        totalTime = 0;
-        board = new Board(rows, cols);
+        paused = false;
+        board = new Board(rows, cols, MyGame.persistence.keyBindings);
         lastTime = performance.now();
-        myInput = input.Keyboard();
+        myInput = MyGame.input.Keyboard();
         requestAnimationFrame(gameLoop);
     }
 
     function initialize() {
         rows = 15;
         cols = 15;
-        graphics.initalize();
+        MyGame.graphics.initalize();
     }
 
     return {
@@ -60,4 +68,4 @@ MyGame.screens['gameplay'] = (function(game, graphics, input) {
         run
     }
 
-}(MyGame.game, MyGame.graphics, MyGame.input));
+}());
