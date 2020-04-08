@@ -1,5 +1,6 @@
 class Turtle {
     constructor(spec, laneHeight) {
+        this.type = 'turtle';
         this.numTurtles = Math.floor(Math.random() * (2) + 2);
         this.moveRate = spec.moveRate;
         this.turtles = [];
@@ -47,6 +48,15 @@ class Turtle {
                 this.turtles[i].elapsed = 0;
                 this.turtles[i].index = (this.turtles[i].index + 1) % this.turtleImages.length;
             }
+        }
+    }
+
+    updateFrog(elapsedTime, width, frog) {
+        if (this.rotation == 0) {
+            frog.center.x += (width / this.moveRate) * elapsedTime;
+        }
+        else {
+            frog.center.x -= (width / this.moveRate) * elapsedTime;
         }
     }
 

@@ -1,5 +1,6 @@
 class Log {
     constructor(spec, laneHeight) {
+        this.type = 'log';
         this.log = spec.obj();
         this.moveRate = spec.moveRate;
         this.center = {...spec.center};
@@ -28,6 +29,15 @@ class Log {
         }
         else {
             this.center.x -= (width / this.moveRate) * elapsedTime;
+        }
+    }
+
+    updateFrog(elapsedTime, width, frog) {
+        if (this.rotation == 0) {
+            frog.center.x += (width / this.moveRate) * elapsedTime;
+        }
+        else {
+            frog.center.x -= (width / this.moveRate) * elapsedTime;
         }
     }
 

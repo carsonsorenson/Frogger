@@ -9,11 +9,10 @@ MyGame.graphics = (function(assets, objects) {
     }
 
     function drawBackground() {
-        drawTexture(
+        ctx.drawImage(
             assets.background,
-            {x: ctx.canvas.width / 2, y: ctx.canvas.height / 2},
-            {width: ctx.canvas.width, height: ctx.canvas.height},
-            0
+            0, 0,
+            ctx.canvas.width, ctx.canvas.height
         )
     }
 
@@ -25,6 +24,13 @@ MyGame.graphics = (function(assets, objects) {
             let y = split * i;
             ctx.moveTo(0, y);
             ctx.lineTo(ctx.canvas.width, y);
+            ctx.stroke();
+        }
+        let split2 = ctx.canvas.width / rows;
+        for (let i = 1; i < rows; i++) {
+            let x = split2 * i;
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, ctx.canvas.height);
             ctx.stroke();
         }
     }
@@ -50,6 +56,14 @@ MyGame.graphics = (function(assets, objects) {
         ctx.rotate(rotation);
         ctx.translate(-center.x, -center.y);
 
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(
+            center.x - size.width / 2,
+            center.y - size.height / 2,
+            size.width,
+            size.height
+        )
+
         ctx.drawImage(
             s.image,
             s.x, s.y,
@@ -65,7 +79,7 @@ MyGame.graphics = (function(assets, objects) {
     function resize() {
         let width = window.innerWidth * 0.9;
         let height = window.innerHeight * 0.9;
-        let ratio = 1.5;
+        let ratio = 1.3;
 
         if (width / height < ratio) {
             canvas.width = width;

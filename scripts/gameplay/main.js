@@ -1,44 +1,49 @@
-MyGame.screens['gameplay'] = (function(game, graphics) {
+MyGame.screens['gameplay'] = (function(game, graphics, input) {
     let lastTime
     let rows;
     let cols;
     let board;
+    let myInput;
+    let totalTime;
 
     function processInput(elapsedTime) {
-
+        board.processInput(myInput.inputBuffer, elapsedTime);
     }
 
     function update(elapsedTime) {
+        myInput.update(elapsedTime);
         board.update(elapsedTime);
     }
 
     function render() {
         graphics.clear();
         graphics.drawBackground();
-        //graphics.drawLines(rows);
         board.render();
+        //graphics.drawLines(rows);
     }
 
     function gameLoop(time) {
         let elapsedTime = time - lastTime;
         lastTime = time;
 
-        let fps = 1000 / elapsedTime;
-        if (fps < 50) {
-            console.log('here!!');
-        }
-
         processInput(elapsedTime);
         update(elapsedTime);
         render();
 
-        requestAnimationFrame(gameLoop);
+        totalTime += elapsedTime;
+        let fps = 1000 / elapsedTime;
+        if (fps < 50 && totalTime > 2000) {
+            console.log(fps);
+        }
 
+        requestAnimationFrame(gameLoop);
     }
 
     function run() {
+        totalTime = 0;
         board = new Board(rows, cols);
         lastTime = performance.now();
+        myInput = input.Keyboard();
         requestAnimationFrame(gameLoop);
     }
 
@@ -53,4 +58,4 @@ MyGame.screens['gameplay'] = (function(game, graphics) {
         run
     }
 
-}(MyGame.game, MyGame.graphics));
+}(MyGame.game, MyGame.graphics, MyGame.input));

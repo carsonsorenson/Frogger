@@ -1,5 +1,6 @@
 class Car {
     constructor(spec, laneHeight) {
+        this.type = 'car';
         this.car = spec.obj();
         this.moveRate = spec.moveRate;
         this.center = {...spec.center};

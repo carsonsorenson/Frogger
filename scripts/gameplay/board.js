@@ -13,18 +13,18 @@ class Board {
         this.sprites = MyGame.objects.sprites;
 
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.laneWidth, this.numCols);
-        this.frog = new Frog(MyGame.graphics.sprites.getFrogs(), this.laneWidth, this.laneHeight, 13);
+        this.frog = new Frog(this.sprites.getFrogs(), this.laneWidth, this.laneHeight, 13);
         this.lanes = [
-            {laneNumber: 1, constructor: Log, moveRate: 10000, respawnRate: 2750, obj: this.sprites.getMediumLog, rotation: 0, start: 'left'},
+            //{laneNumber: 1, constructor: Log, moveRate: 10000, respawnRate: 7500, obj: this.sprites.getMediumLog, rotation: 0, start: 'left'},
             {laneNumber: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, rotation: Math.PI, start: 'right'},
-            {laneNumber: 3, constructor: Log, moveRate: 8000, respawnRate: 3000, obj: this.sprites.getLongLog, rotation: 0, start: 'left'},
-            {laneNumber: 4, constructor: Log, moveRate: 14000, respawnRate: 2500, obj: this.sprites.getShortLog, rotation: 0, start: 'left'},
+            //{laneNumber: 3, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getLongLog, rotation: 0, start: 'left'},
+            //{laneNumber: 4, constructor: Log, moveRate: 14000, respawnRate: 6000, obj: this.sprites.getShortLog, rotation: 0, start: 'left'},
             {laneNumber: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, rotation: Math.PI, start: 'right'},
-            {laneNumber: 8, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, rotation: Math.PI, start: 'right'},
-            {laneNumber: 9, constructor: Car, moveRate: 8000, respawnRate: 4000, obj: this.sprites.getFireTruck, rotation: 0, start: 'left'},
-            {laneNumber: 10, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, rotation: Math.PI, start: 'right'},
-            {laneNumber: 11, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, rotation: 0, start: 'left'},
-            {laneNumber: 12, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, rotation: Math.PI, start: 'right'},
+            //{laneNumber: 8, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, rotation: Math.PI, start: 'right'},
+            //{laneNumber: 9, constructor: Car, moveRate: 8000, respawnRate: 4000, obj: this.sprites.getFireTruck, rotation: 0, start: 'left'},
+            //{laneNumber: 10, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, rotation: Math.PI, start: 'right'},
+            //{laneNumber: 11, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, rotation: 0, start: 'left'},
+            //{laneNumber: 12, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, rotation: Math.PI, start: 'right'},
         ];
 
         for (let i = 0; i < this.lanes.length; i++) {
@@ -33,13 +33,66 @@ class Board {
             this.lanes[i].center.y = this.getY(this.lanes[i].laneNumber, this.height);
             this.lanes[i].start == 'left' ? this.lanes[i].center.x = 0 : this.lanes[i].center.x = this.width;
         }
+
+        this.bindings = {
+            'a': (elapsedTime) => this.frog.moveLeft(elapsedTime),
+            'w': (elapsedTime) => this.frog.moveUp(elapsedTime),
+            'd': (elapsedTime) => this.frog.moveRight(elapsedTime),
+            's': (elapsedTime) => this.frog.moveDown(elapsedTime)
+        };
     }
 
     getY(laneNumber, height) {
         return laneNumber * (height / this.numRows) + (this.laneHeight / 2);
     }
 
+    processInput(inputBuffer, elapsedTime) {
+        for (let key in inputBuffer) {
+            if (key in this.bindings) {
+                this.bindings[key](elapsedTime);
+            }
+        }
+    }
+
+    intersects(elapsedTime) {
+        for (let i = 0; i < this.objects.length; i++) {
+            if (this.objects[i].laneNumber == this.frog.laneNumber) {
+                if (this.objects[i].type == 'car') {
+                    let frogLeft = this.frog.center.x - (this.frog.size.width / 2);
+                    let frogRight = this.frog.center.x + (this.frog.size.width / 2);
+                    let left = this.objects[i].center.x - (this.objects[i].size.width / 2);
+                    let right = this.objects[i].center.x + (this.objects[i].size.width / 2);
+                    if (frogLeft < right && frogRight > left && this.frog.laneNumber) {
+                        console.log('hit!');
+                    }
+                }
+                else if (this.objects[i].type == 'log') {
+                    let frogLeft = this.frog.center.x;
+                    let frogRight = this.frog.center.x;
+                    let left = this.objects[i].center.x - (this.objects[i].size.width / 2);
+                    let right = this.objects[i].center.x + (this.objects[i].size.width / 2);
+                    if (frogLeft < right && frogRight > left && this.frog.laneNumber) {
+                        this.objects[i].updateFrog(elapsedTime, this.width, this.frog);
+                    }
+                }
+                else if (this.objects[i].type == 'turtle') {
+                    let frogLeft = this.frog.center.x;
+                    let frogRight = this.frog.center.x;
+                    for (let j = 0; j < this.objects[i].turtles.length; j++) {
+                        let left = this.objects[i].turtles[j].center.x - (this.objects[i].size.width / 2);
+                        let right = this.objects[i].turtles[j].center.x + (this.objects[i].size.width / 2);
+                        if (frogLeft < right && frogRight > left && this.frog.laneNumber) {
+                            console.log('hit!');
+                            this.objects[i].updateFrog(elapsedTime, this.width, this.frog);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     update(elapsedTime) {
+        this.frog.update(elapsedTime);
         for (let i = 0; i < this.lanes.length; i++) {
             this.lanes[i].elapsedTime += elapsedTime;;
             if (this.lanes[i].elapsedTime > this.lanes[i].respawnRate) {
@@ -59,14 +112,15 @@ class Board {
                 this.objects[i].update(elapsedTime, this.width);
             }
         }
+        this.intersects(elapsedTime);
     }
 
     render() {
         this.topRow.render(MyGame.graphics.drawSprite);
-        this.frog.render(MyGame.graphics.drawSprite);
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].render(MyGame.graphics.drawSprite);
         }
+        this.frog.render(MyGame.graphics.drawSprite);
     }
 
     resize(width, height) {

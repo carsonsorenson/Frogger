@@ -13,7 +13,7 @@ MyGame.loader = (function() {
             message: 'Main menu loaded'
         },
         {
-            scripts: ['objects/sprites'],
+            scripts: ['objects/sprites', 'objects/input'],
             message: 'Objects loaded',
         },
         {
