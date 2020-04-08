@@ -1,8 +1,8 @@
-MyGame.screens['credits'] = (function(game) {
-    function initialize() {
+MyGame.screens['credits'] = (function() {
+    function initialize(showScreen) {
         document.getElementById("creditsBack").addEventListener(
             'click', function() {
-                game.showScreen('mainMenu');
+                showScreen('mainMenu');
             }
         )
     }
@@ -13,4 +13,4 @@ MyGame.screens['credits'] = (function(game) {
         initialize,
         run
     }
-}(MyGame.game));
+}());

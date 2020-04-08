@@ -1,6 +1,5 @@
 MyGame.game = (function(screens) {
     function showScreen(id) {
-        console.log(id, screens);
         let active = document.getElementsByClassName('active');
         for (let i = 0; i < active.length; i++) {
             active[i].classList.remove('active');
@@ -34,7 +33,7 @@ MyGame.game = (function(screens) {
 
         let screen = null;
         for (screen in screens) {
-            screens[screen].initialize();
+            screens[screen].initialize(showScreen);
         }
         showScreen('mainMenu')
     }

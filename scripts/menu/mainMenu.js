@@ -1,26 +1,26 @@
-MyGame.screens['mainMenu'] = (function(game) {
-    function initialize() {
+MyGame.screens['mainMenu'] = (function() {
+    function initialize(showScreen) {
         document.getElementById("mainNewGame").addEventListener(
             'click', function() {
-                game.showScreen('gameplay');
+                showScreen('gameplay');
             }
         )
 
         document.getElementById("mainControls").addEventListener(
             'click', function() {
-                game.showScreen('controls')
+                showScreen('controls')
             }
         )
         
         document.getElementById("mainHighScores").addEventListener(
             'click', function() {
-                game.showScreen('highScores')
+                showScreen('highScores')
             }
         )
 
         document.getElementById("mainCredits").addEventListener(
             'click', function() {
-                game.showScreen('credits')
+                showScreen('credits')
             }
         )
     }
@@ -31,4 +31,4 @@ MyGame.screens['mainMenu'] = (function(game) {
         initialize,
         run
     }
-}(MyGame.game));
+}());

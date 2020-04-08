@@ -1,8 +1,8 @@
-MyGame.screens['highScores'] = (function(game) {
-    function initialize() {
+MyGame.screens['highScores'] = (function() {
+    function initialize(showScreen) {
         document.getElementById("highScoresBack").addEventListener(
             'click', function() {
-                game.showScreen('mainMenu');
+                showScreen('mainMenu');
             }
         )
     }
@@ -13,4 +13,4 @@ MyGame.screens['highScores'] = (function(game) {
         initialize,
         run
     }
-}(MyGame.game));
+}());

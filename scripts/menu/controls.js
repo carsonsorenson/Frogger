@@ -1,10 +1,10 @@
-MyGame.screens['controls'] = (function(game, persistence) {
-    if (!('left' in persistence.keyBindings)) {
-        persistence.addKeyBinding('left', 'a');
-        persistence.addKeyBinding('right', 'd');
-        persistence.addKeyBinding('up', 'w');
-        persistence.addKeyBinding('down', 's');
-        persistence.addKeyBinding('pause', 'Escape');
+MyGame.screens['controls'] = (function() {;
+    if (!('left' in MyGame.persistence.keyBindings)) {
+        MyGame.persistence.addKeyBinding('left', 'a');
+        MyGame.persistence.addKeyBinding('right', 'd');
+        MyGame.persistence.addKeyBinding('up', 'w');
+        MyGame.persistence.addKeyBinding('down', 's');
+        MyGame.persistence.addKeyBinding('pause', 'Escape');
     }
 
     let buttons = {
@@ -39,7 +39,7 @@ MyGame.screens['controls'] = (function(game, persistence) {
         for (let button in buttons) {
             buttons[button].row.classList.remove('active');
             buttons[button].key.classList.remove('blinking');
-            buttons[button].key.innerHTML = persistence.keyBindings[button];
+            buttons[button].key.innerHTML = MyGame.persistence.keyBindings[button];
             buttons[button].active = false;
         }
     }
@@ -54,20 +54,19 @@ MyGame.screens['controls'] = (function(game, persistence) {
     function onKeyPress(e) {
         for (let button in buttons) {
             if (buttons[button].active) {
-                persistence.addKeyBinding(button, e.key);
+                MyGame.persistence.addKeyBinding(button, e.key);
                 buttons[button].key.innerHTML = e.key;
                 buttons[button].key.classList.remove('blinking');
             }
         }
     }
 
-    function initialize() {
+    function initialize(showScreen) {
         document.addEventListener("keydown", onKeyPress);
-        console.log(MyGame);
         document.getElementById("controlsBack").addEventListener(
             'click', function() {
                 removeActives();
-                game.showScreen('mainMenu');
+                showScreen('mainMenu');
             }
         )
 
@@ -79,7 +78,7 @@ MyGame.screens['controls'] = (function(game, persistence) {
                     changeBinding(this, button);
                 }
             )
-            buttons[button].key.innerHTML = persistence.keyBindings[button];
+            buttons[button].key.innerHTML = MyGame.persistence.keyBindings[button];
         }
     }
 
@@ -89,4 +88,4 @@ MyGame.screens['controls'] = (function(game, persistence) {
         initialize,
         run
     }
-}(MyGame.game, MyGame.persistence));
+}());

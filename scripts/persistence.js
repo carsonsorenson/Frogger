@@ -7,7 +7,6 @@ MyGame.persistence = (function() {
     }
 
     function addKeyBinding(key, value) {
-        console.log(key, value);
         keyBindings[key] = value;
         localStorage['Frogger.keybindings'] = JSON.stringify(keyBindings);
     }
