@@ -36,7 +36,9 @@ MyGame.screens['gameplay'] = (function(game, graphics, input) {
             console.log(fps);
         }
 
-        requestAnimationFrame(gameLoop);
+        if (board.frog.alive) {
+            requestAnimationFrame(gameLoop);
+        }
     }
 
     function run() {

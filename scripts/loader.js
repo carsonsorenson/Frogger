@@ -4,13 +4,19 @@ MyGame = {
     render: {},
     assets: {},
     objects: {},
+    persistence: {},
+    keyBindings: {}
 }
 
 MyGame.loader = (function() {
     let scriptOrder = [
         {
-            scripts: ['menu/main'],
-            message: 'Main menu loaded'
+            scripts: ['persistence'],
+            message: 'Persistence loaded'
+        },
+        {
+            scripts: ['menu/main', 'menu/controls', 'menu/credits', 'menu/highScores', 'menu/mainMenu'],
+            message: 'Menu loaded'
         },
         {
             scripts: ['objects/sprites', 'objects/input'],

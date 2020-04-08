@@ -5,7 +5,7 @@ class Frog {
         this.laneHeight = laneHeight;
         this.laneNumber = rowNum;
         this.center = {
-            x: this.laneWidth / 2,
+            x: this.laneWidth / 2 * 3,
             y: this.laneHeight * this.laneNumber + (this.laneHeight / 2)
         };
         this.size = {
@@ -15,6 +15,7 @@ class Frog {
 
         this.index = 21;
         this.moving = false;
+        this.alive = true;
         this.direction;
         this.newPos;
 
@@ -27,7 +28,7 @@ class Frog {
             this.index = 6;
             this.moving = true;
             this.direction = 'right';
-            this.newPos = this.center.x + this.laneWidth;
+            this.newPos = this.center.x + this.laneHeight;
         }
     }
 
@@ -36,7 +37,7 @@ class Frog {
             this.index = 3;
             this.moving = true;
             this.direction = 'left';
-            this.newPos = this.center.x - this.laneWidth;
+            this.newPos = this.center.x - this.laneHeight;
         }
     }
 
@@ -55,19 +56,18 @@ class Frog {
             this.index = 9;
             this.moving = true;
             this.direction = 'up';
-            this.newPos = this.center.y - this.laneHeight
+            this.newPos = this.center.y - this.laneHeight;
             this.laneNumber--;
         }
     }
 
     update(elapsedTime) {
         // move across cell in 2/10 of a second
-        let moveRateX = this.laneWidth / 200 * elapsedTime;
-        let moveRateY = this.laneHeight / 200 * elapsedTime;
+        let moveRate = this.laneHeight / 200 * elapsedTime;
 
         if (this.moving) {
             if (this.direction == 'right') {
-                this.center.x += moveRateX;
+                this.center.x += moveRate;
                 if (this.center.x > this.newPos) {
                     this.moving = false;
                     this.center.x = this.newPos;
@@ -75,7 +75,7 @@ class Frog {
                 }
             }
             else if (this.direction == 'left') {
-                this.center.x -= moveRateX;
+                this.center.x -= moveRate;
                 if (this.center.x < this.newPos) {
                     this.moving = false;
                     this.center.x = this.newPos;
@@ -83,7 +83,7 @@ class Frog {
                 }
             }
             else if (this.direction == 'down') {
-                this.center.y += moveRateY;
+                this.center.y += moveRate;
                 if (this.center.y > this.newPos) {
                     this.moving = false;
                     this.center.y = this.newPos;
@@ -91,7 +91,7 @@ class Frog {
                 }
             }
             else if (this.direction == 'up') {
-                this.center.y -= moveRateY;
+                this.center.y -= moveRate;
                 if (this.center.y < this.newPos) {
                     this.moving = false;
                     this.center.y = this.newPos;

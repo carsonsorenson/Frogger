@@ -52,11 +52,13 @@ class Turtle {
     }
 
     updateFrog(elapsedTime, width, frog) {
-        if (this.rotation == 0) {
-            frog.center.x += (width / this.moveRate) * elapsedTime;
-        }
-        else {
-            frog.center.x -= (width / this.moveRate) * elapsedTime;
+        if (!frog.moving) {
+            if (this.rotation == 0) {
+                frog.center.x += (width / this.moveRate) * elapsedTime;
+            }
+            else {
+                frog.center.x -= (width / this.moveRate) * elapsedTime;
+            }
         }
     }
 

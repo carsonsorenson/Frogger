@@ -6,8 +6,63 @@
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
 <body>
-    <div id="menu">
-        <div id="mainMenu" class="screen"></div>
+    <div id="menuing">
+        <div id="mainMenu" class="screen">
+            <div id="title">
+                <h1>FROGGER</h1>
+            </div>
+            <div id="menuItems">
+                <p class="menuButton" id="mainNewGame">NEW GAME</p>
+                <p class="menuButton" id="mainControls">CONTROLS</p>
+                <p class="menuButton" id="mainHighScores">HIGH SCORES</p>
+                <p class="menuButton" id="mainCredits">CREDITS</p>
+            </div>
+        </div>
+        <div id="controls" class="screen">
+            <h1>CONTROLS</h1>
+            <div id="controlsTable">
+                <div id="header" class="tableHeader">
+                    <div class="table-row-item"><p>ACTION</p></div>
+                    <div class="table-row-item"><p>KEY</p></div>
+                </div>
+                <div id="leftRow" class="tableRow">
+                    <div class="table-row-item"><p>LEFT</p></div>
+                    <div class="table-row-item"><p id="leftItem"></p></div>
+                </div>
+                <div id="rightRow" class="tableRow">
+                    <div class="table-row-item"><p>RIGHT</p></div>
+                    <div class="table-row-item"><p id="rightItem"></p></div>
+                </div>
+                <div id="upRow" class="tableRow">
+                    <div class="table-row-item"><p>UP</p></div>
+                    <div class="table-row-item"><p id="upItem"></p></div>
+                </div>
+                <div id="downRow" class="tableRow">
+                    <div class="table-row-item"><p>DOWN</p></div>
+                    <div class="table-row-item"><p id="downItem"></p></div>
+                </div>
+                <div id="pauseRow" class="tableRow">
+                    <div class="table-row-item"><p>PAUSE/RESUME</p></div>
+                    <div class="table-row-item"><p id="pauseItem"></p></div>
+                </div>
+            </div>
+            <div id="menuItems">
+                <p class="menuButton" id="controlsBack">BACK</p>
+            </div>
+        </div>
+        <div id="highScores" class="screen">
+            <h1>HIGH SCORES</h1>
+            <div id="menuItems">
+                <p class="menuButton" id="highScoresBack">BACK</p>
+            </div>
+        </div>
+        <div id="credits" class="screen">
+            <h1>CREATED BY</h1>
+            <h1>CARSON SORENSON</h1>
+            <div id="menuItems">
+                <p class="menuButton" id="creditsBack">BACK</p>
+            </div>
+        </div>
         <div id="gameplay" class="screen">
             <canvas id="myCanvas"></canvas>
         </div>
