@@ -1,6 +1,7 @@
 MyGame.screens['gameplay'] = (function(game, graphics) {
     let lastTime
     let rows;
+    let cols;
     let board;
 
     function processInput(elapsedTime) {
@@ -36,13 +37,14 @@ MyGame.screens['gameplay'] = (function(game, graphics) {
     }
 
     function run() {
-        board = new Board(rows);
+        board = new Board(rows, cols);
         lastTime = performance.now();
         requestAnimationFrame(gameLoop);
     }
 
     function initialize() {
         rows = 15;
+        cols = 15;
         graphics.initalize();
     }
 

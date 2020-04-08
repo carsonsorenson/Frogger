@@ -13,15 +13,17 @@ MyGame.loader = (function() {
             message: 'Main menu loaded'
         },
         {
-            scripts: ['objects/gameSprites'],
+            scripts: ['objects/sprites'],
             message: 'Objects loaded',
         },
         {
-            scripts: ['render/graphics'],
+            scripts: ['render/graphics', 'render/topRow'],
             message: 'Graphics loaded'
         },
         {
-            scripts: ['gameplay/car', 'gameplay/log', 'gameplay/turtle', 'gameplay/board','gameplay/main'],
+            scripts: ['gameplay/car', 'gameplay/log', 'gameplay/turtle', 
+                'gameplay/topRow', 'gameplay/frog', 'gameplay/board','gameplay/main'
+            ],
             message: 'Main gameplay loaded'
         }
     ];
@@ -36,7 +38,7 @@ MyGame.loader = (function() {
             source: '/assets/gameSprites.png'
         },
         {
-            key: 'frogSprite',
+            key: 'frogSprites',
             source: '/assets/frogSprites.png'
         }
     ];

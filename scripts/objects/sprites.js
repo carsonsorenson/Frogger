@@ -74,6 +74,24 @@ MyGame.objects.sprites = (function(assets) {
         return {image: assets.sprites, x: 498, y: 2 * spriteHeight, width: spriteHeight, height: spriteHeight};
     }
 
+    function getFrogs() {
+        let frogHeight = assets.frogSprites.height / 8;
+        let frogWidth = assets.frogSprites.width / 12;
+        let frogSprites = [];
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 3; j++) {
+                frogSprites.push({
+                    image: assets.frogSprites,
+                    x: j * frogWidth,
+                    y: i * frogHeight,
+                    width: frogWidth,
+                    height: frogHeight
+                })
+            }
+        }
+        return frogSprites;
+    }
+
     return {
         getShortLog,
         getMediumLog,
@@ -87,7 +105,8 @@ MyGame.objects.sprites = (function(assets) {
         getFly,
         getDeath,
         getBush,
-        getBushWithLillyPad
+        getBushWithLillyPad,
+        getFrogs
     }
 
 }(MyGame.assets))

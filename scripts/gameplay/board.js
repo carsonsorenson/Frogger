@@ -1,25 +1,30 @@
 class Board {
-    constructor(numLanes) {
+    constructor(numRows, numCols) {
         this.objects = [];
         this.width = MyGame.graphics.width;
         this.height = MyGame.graphics.height;
-        this.numLanes = numLanes;
-        this.laneHeight = this.height / this.numLanes;
+        this.numRows = numRows;
+        this.numCols = numCols;
+        this.laneHeight = this.height / this.numRows;
+        this.laneWidth = this.width / this.numCols;
 
         window.addEventListener('resize', () => this.resize(MyGame.graphics.width, MyGame.graphics.height));
 
-        let sprites = MyGame.objects.sprites;
+        this.sprites = MyGame.objects.sprites;
+
+        this.topRow = new TopRow(this.sprites, this.laneHeight, this.laneWidth, this.numCols);
+        this.frog = new Frog(MyGame.graphics.sprites.getFrogs(), this.laneWidth, this.laneHeight, 13);
         this.lanes = [
-            {laneNumber: 1, constructor: Log, moveRate: 10000, respawnRate: 2750, obj: sprites.getMediumLog, rotation: 0, start: 'left'},
-            {laneNumber: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: sprites.getTurtles, rotation: Math.PI, start: 'right'},
-            {laneNumber: 3, constructor: Log, moveRate: 8000, respawnRate: 3000, obj: sprites.getLongLog, rotation: 0, start: 'left'},
-            {laneNumber: 4, constructor: Log, moveRate: 14000, respawnRate: 2500, obj: sprites.getShortLog, rotation: 0, start: 'left'},
-            {laneNumber: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: sprites.getTurtles, rotation: Math.PI, start: 'right'},
-            {laneNumber: 8, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: sprites.getSemi, rotation: Math.PI, start: 'right'},
-            {laneNumber: 9, constructor: Car, moveRate: 8000, respawnRate: 4000, obj: sprites.getFireTruck, rotation: 0, start: 'left'},
-            {laneNumber: 10, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: sprites.getRandomCar, rotation: Math.PI, start: 'right'},
-            {laneNumber: 11, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: sprites.getSemi, rotation: 0, start: 'left'},
-            {laneNumber: 12, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: sprites.getRandomCar, rotation: Math.PI, start: 'right'}
+            {laneNumber: 1, constructor: Log, moveRate: 10000, respawnRate: 2750, obj: this.sprites.getMediumLog, rotation: 0, start: 'left'},
+            {laneNumber: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, rotation: Math.PI, start: 'right'},
+            {laneNumber: 3, constructor: Log, moveRate: 8000, respawnRate: 3000, obj: this.sprites.getLongLog, rotation: 0, start: 'left'},
+            {laneNumber: 4, constructor: Log, moveRate: 14000, respawnRate: 2500, obj: this.sprites.getShortLog, rotation: 0, start: 'left'},
+            {laneNumber: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, rotation: Math.PI, start: 'right'},
+            {laneNumber: 8, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, rotation: Math.PI, start: 'right'},
+            {laneNumber: 9, constructor: Car, moveRate: 8000, respawnRate: 4000, obj: this.sprites.getFireTruck, rotation: 0, start: 'left'},
+            {laneNumber: 10, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, rotation: Math.PI, start: 'right'},
+            {laneNumber: 11, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, rotation: 0, start: 'left'},
+            {laneNumber: 12, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, rotation: Math.PI, start: 'right'},
         ];
 
         for (let i = 0; i < this.lanes.length; i++) {
@@ -31,7 +36,7 @@ class Board {
     }
 
     getY(laneNumber, height) {
-        return laneNumber * (height / this.numLanes) + (this.laneHeight / 2);
+        return laneNumber * (height / this.numRows) + (this.laneHeight / 2);
     }
 
     update(elapsedTime) {
@@ -57,13 +62,17 @@ class Board {
     }
 
     render() {
+        this.topRow.render(MyGame.graphics.drawSprite);
+        this.frog.render(MyGame.graphics.drawSprite);
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].render(MyGame.graphics.drawSprite);
         }
     }
 
     resize(width, height) {
-        this.laneHeight = height / this.numLanes;
+        this.laneHeight = height / this.numRows;
+        this.laneWidth = width / this.numCols;
+        this.topRow.resize(this.laneWidth, this.laneHeight);
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].setSize(this.laneHeight);
             let y = this.getY(this.objects[i].laneNumber, height);
