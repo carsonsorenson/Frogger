@@ -35,27 +35,13 @@ MyGame.graphics = (function(assets, objects) {
         }
     }
 
-    function drawTexture(image, center, size, rotation) {
-        ctx.save();
-        ctx.translate(center.x, center.y);
-        ctx.rotate(rotation);
-        ctx.translate(-center.x, -center.y);
-
-        ctx.drawImage(
-            image,
-            center.x - size.width / 2,
-            center.y - size.height / 2,
-            size.width,
-            size.height
-        )
-    }
-
     function drawSprite(s, center, size, rotation) {
         ctx.save();
         ctx.translate(center.x, center.y);
         ctx.rotate(rotation);
         ctx.translate(-center.x, -center.y);
 
+        /*
         ctx.strokeStyle = "black";
         ctx.strokeRect(
             center.x - size.width / 2,
@@ -63,6 +49,7 @@ MyGame.graphics = (function(assets, objects) {
             size.width,
             size.height
         )
+        */
 
         ctx.drawImage(
             s.image,
@@ -91,7 +78,7 @@ MyGame.graphics = (function(assets, objects) {
         }
     }
 
-    function initalize() {
+    function initialize() {
         window.addEventListener('resize', resize);
         resize();
     }
@@ -100,7 +87,7 @@ MyGame.graphics = (function(assets, objects) {
         clear,
         drawBackground,
         drawLines,
-        initalize,
+        initialize,
         drawSprite,
         get width() { return canvas.width },
         get height() { return canvas.height }

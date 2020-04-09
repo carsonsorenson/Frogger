@@ -27,11 +27,27 @@ MyGame.loader = (function() {
             message: 'Graphics loaded'
         },
         {
+            scripts: ['gameplay/object'],
+            message: 'Gameplay base object loaded'
+        },
+        {
+            scripts: ['gameplay/log', 'gameplay/car', 'gameplay/turtle', 'gameplay/frog', 'gameplay/topRow', 'gameplay/lives'],
+            message: 'Gameplay objects loaded'
+        },
+        {
+            scripts: ['gameplay/board'],
+            message: 'Gameplay board loaded'
+        },
+        {
+            scripts: ['gameplay/main'],
+            message: 'Gameplay all loaded'
+        }
+        /*{
             scripts: ['gameplay/car', 'gameplay/log', 'gameplay/turtle', 
                 'gameplay/topRow', 'gameplay/frog', 'gameplay/board','gameplay/main'
             ],
             message: 'Main gameplay loaded'
-        }
+        }*/
     ];
 
     let assetOrder = [

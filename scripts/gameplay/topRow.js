@@ -1,9 +1,9 @@
 class TopRow {
-    constructor(sprites, laneHeight, laneWidth, numCols) {
+    constructor(sprites, laneHeight, width, rows) {
         this.sprites = sprites;
         this.laneHeight = laneHeight;
-        this.laneWidth = laneWidth;
-        this.numCols = numCols;
+        this.laneWidth = width / rows;
+        this.numCols = rows;
 
         this.bushImage = this.sprites.getBush();
         this.lillyImage = this.sprites.getBushWithLillyPad();
@@ -11,18 +11,29 @@ class TopRow {
         for (let i = 0; i < this.numCols; i++) {
             if ((i - 1) % 3 == 0) {
                 this.objects.push({
-                    image: this.lillyImage
+                    type: 'lilly',
+                    image: this.lillyImage,
+                    frog: null
                 });
             }
             else {
                 this.objects.push({
-                    image: this.bushImage
+                    type: 'bush',
+                    image: this.bushImage,
                 });
             }
             this.objects[i].center = {
                 x: i * this.laneWidth + (this.laneWidth / 2),
                 y: this.laneHeight / 2
             };
+        }
+    }
+
+    update(elapsedTime) {
+        for (let i = 0; i < this.objects.length; i++) {
+            if (this.objects[i].frog) {
+                this.objects[i].frog.updateSprite(elapsedTime);
+            }
         }
     }
 
@@ -33,15 +44,21 @@ class TopRow {
                 this.objects[i].center,
                 {width: this.laneWidth + 1, height: this.laneWidth}
             )
+            if (this.objects[i].frog) {
+                this.objects[i].frog.render(drawSprite);
+            }
         }
     }
 
-    resize(laneWidth, laneHeight) {
-        this.laneWidth = laneWidth;
+    resize(laneHeight, width, newWidth) {
+        this.laneWidth = newWidth / this.numCols;
         this.laneHeight = laneHeight;
         for (let i = 0; i < this.numCols; i++) {
             this.objects[i].center.x = i * this.laneWidth + (this.laneWidth / 2);
             this.objects[i].center.y = this.laneHeight / 2;
+            if (this.objects[i].frog) {
+                this.objects[i].frog.setDimensions(laneHeight, width, newWidth)
+            }
         }
     }
 }
