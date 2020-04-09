@@ -23,15 +23,19 @@ MyGame.loader = (function() {
             message: 'Objects loaded',
         },
         {
-            scripts: ['render/graphics', 'render/topRow'],
+            scripts: ['render/graphics'],
             message: 'Graphics loaded'
+        },
+        {
+            scripts: ['render/frogLives'],
+            message: 'Rendering loaded'
         },
         {
             scripts: ['gameplay/object'],
             message: 'Gameplay base object loaded'
         },
         {
-            scripts: ['gameplay/log', 'gameplay/car', 'gameplay/turtle', 'gameplay/frog', 'gameplay/topRow', 'gameplay/lives'],
+            scripts: ['gameplay/log', 'gameplay/car', 'gameplay/turtle', 'gameplay/frog', 'gameplay/topRow', 'gameplay/gameStatus'],
             message: 'Gameplay objects loaded'
         },
         {

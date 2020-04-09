@@ -1,7 +1,8 @@
 class Board {
-    constructor(numRows, graphics, objects, keyBindings) {
+    constructor(numRows, graphics, objects, renderer, keyBindings) {
         this.numRows = numRows;
         this.objects = objects;
+        this.renderer = renderer;
         this.setDimensions(graphics)
         window.addEventListener('resize', () => this.setDimensions(MyGame.graphics));
 
@@ -10,7 +11,7 @@ class Board {
         this.sprites = objects.sprites;
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows);
         this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
-        this.lives = new Lives(this.sprites.getFrogs, this.laneHeight, this.numRows);
+        this.gameStatus = new GameStatus(this.sprites.getFrogs, this.laneHeight, this.numRows);
 
         this.lanes = [
             {lane: 1, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getMediumLog, start: 'left'},
@@ -49,7 +50,7 @@ class Board {
         }
         this.topRow.render(this.drawSprite);
         this.frog.render(this.drawSprite);
-        this.lives.render(this.drawSprite);
+        this.gameStatus.render(this.renderer);
     }
 
     spawnObjects(elapsedTime) {
@@ -86,7 +87,7 @@ class Board {
 
         if (!this.frog.alive) {
             if (!this.frog.finished) {
-                this.lives.lost();
+                this.gameStatus.lost();
             }
             this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
         }
@@ -103,8 +104,8 @@ class Board {
         if (this.topRow) {
             this.topRow.resize(this.laneHeight, this.width, graphics.width);
         }
-        if (this.lives) {
-            this.lives.setDimensions(this.laneHeight);
+        if (this.gameStatus) {
+            this.gameStatus.setDimensions(this.laneHeight);
         }
         this.width = graphics.width;
         this.height = graphics.height;

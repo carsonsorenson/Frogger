@@ -1,4 +1,4 @@
-MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, input) {
+MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, input, renderer) {
     let lastTime;
     let rows;
     let board;
@@ -43,7 +43,7 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         myInput = input.Keyboard();
         paused = false;
         lastTime = performance.now();
-        board = new Board(rows, graphics, objects, persistence.keyBindings);
+        board = new Board(rows, graphics, objects, renderer, persistence.keyBindings);
         requestAnimationFrame(gameLoop);
     }
 
@@ -56,4 +56,4 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         initialize,
         run
     }
-}(MyGame.game, MyGame.graphics, MyGame.objects, MyGame.persistence, MyGame.input));
+}(MyGame.game, MyGame.graphics, MyGame.objects, MyGame.persistence, MyGame.input, MyGame.render));
