@@ -156,3 +156,28 @@ h1 {
 #highScoreList {
     list-style: none;
 }
+
+/* Pause/stop game */
+#pauseGame {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+#gameOver {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    text-align: center;
+}
+
+label {
+    font-family: shadows into light !important;
+}
