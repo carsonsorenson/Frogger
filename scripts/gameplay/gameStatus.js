@@ -1,9 +1,12 @@
 class GameStatus {
     constructor(sprites, laneHeight, numRows) {
-        this.numLives = 3;
         this.numRows = numRows;
+        this.numLives = 3;
         this.frogImage = sprites()[13];
         this.laneHeight = laneHeight;
+
+        this.totalTime = 60000;
+        this.remainingTime = this.totalTime;
 
         this.setDimensions(this.laneHeight);
 
@@ -13,8 +16,14 @@ class GameStatus {
         this.numLives--;
     }
 
+    update(elapsedTime) {
+        this.remainingTime -= elapsedTime;
+    }
+
+
     render(renderer) {
         renderer.frogLives.render(this.frogImage, this.numLives, this.center, this.size);
+        renderer.timeBar.render(this.remainingTime, this.totalTime, this.laneHeight);
     }
 
     setDimensions(laneHeight) {

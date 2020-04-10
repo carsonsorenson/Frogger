@@ -27,7 +27,7 @@ MyGame.loader = (function() {
             message: 'Graphics loaded'
         },
         {
-            scripts: ['render/frogLives'],
+            scripts: ['render/frogLives', 'render/timeBar'],
             message: 'Rendering loaded'
         },
         {

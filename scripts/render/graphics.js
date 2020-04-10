@@ -8,6 +8,31 @@ MyGame.graphics = (function(assets, objects) {
         );
     }
 
+    function textWidth(font, text) {
+        ctx.save();
+        ctx.font = font;
+        let width = Math.round(ctx.measureText(text).width) + 1;
+        ctx.restore();
+        return width;
+    }
+
+    function drawText(spec) {
+        ctx.font = spec.font;
+        ctx.fillStyle = spec.fillStyle;
+        ctx.textBaseline = 'middle';
+        ctx.fillText(spec.text, spec.pos.x, spec.pos.y);
+    }
+
+    function drawRect(spec) {
+        ctx.fillStyle = spec.fillStyle;
+        ctx.fillRect(
+            spec.pos.x,
+            spec.pos.y - spec.size.height / 2,
+            spec.size.width,
+            spec.size.height
+        )
+    }
+
     function drawBackground() {
         ctx.drawImage(
             assets.background,
@@ -89,6 +114,9 @@ MyGame.graphics = (function(assets, objects) {
         drawLines,
         initialize,
         drawSprite,
+        textWidth,
+        drawText,
+        drawRect,
         get width() { return canvas.width },
         get height() { return canvas.height }
     }

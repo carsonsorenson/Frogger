@@ -84,6 +84,7 @@ class Board {
 
         this.topRow.update(elapsedTime);
         this.frog.update(elapsedTime, this.objects, this.width, this.topRow);
+        this.gameStatus.update(elapsedTime);
 
         if (!this.frog.alive) {
             if (!this.frog.finished) {
