@@ -8,6 +8,9 @@ class GameStatus {
         this.totalTime = 60000;
         this.remainingTime = this.totalTime;
 
+        this.score = 0;
+        this.highScore = 1000;
+
         this.setDimensions(this.laneHeight);
 
     }
@@ -16,14 +19,19 @@ class GameStatus {
         this.numLives--;
     }
 
+    reset() {
+        this.remainingTime = this.totalTime;
+    }
+
     update(elapsedTime) {
         this.remainingTime -= elapsedTime;
     }
 
 
-    render(renderer) {
+    render(renderer, topRow) {
         renderer.frogLives.render(this.frogImage, this.numLives, this.center, this.size);
         renderer.timeBar.render(this.remainingTime, this.totalTime, this.laneHeight);
+        renderer.score.render(topRow, this.score, this.highScore);
     }
 
     setDimensions(laneHeight) {

@@ -28,8 +28,8 @@ MyGame.render.timeBar = (function(graphics) {
             let rectWidth = (graphics.width / (3 * totalTime)) * time;
             graphics.drawRect({
                 fillStyle: rectColor,
-                pos: {
-                    x: (graphics.width - width) - rectWidth,
+                center: {
+                    x: (graphics.width - width) - (rectWidth / 2),
                     y: graphics.height - laneHeight
                 },
                 size: {

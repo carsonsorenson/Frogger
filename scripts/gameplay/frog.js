@@ -54,7 +54,7 @@ class Frog {
     }
 
     moveUp(elapsedTime) {
-        if (!this.moving) {
+        if (!this.moving && this.lane > 0) {
             this.index = 9;
             this.moving = true;
             this.direction = 'up';
@@ -150,7 +150,7 @@ class Frog {
         if (this.moving) {
             this.updateMovement(elapsedTime);
         }
-        else {
+        if (!this.moving) {
             this.checkCollision(elapsedTime, objects, width, topRow);
         }
         this.updateSprite(elapsedTime);

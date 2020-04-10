@@ -26,8 +26,8 @@ MyGame.graphics = (function(assets, objects) {
     function drawRect(spec) {
         ctx.fillStyle = spec.fillStyle;
         ctx.fillRect(
-            spec.pos.x,
-            spec.pos.y - spec.size.height / 2,
+            spec.center.x - spec.size.width / 2,
+            spec.center.y - spec.size.height / 2,
             spec.size.width,
             spec.size.height
         )

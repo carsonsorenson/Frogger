@@ -50,7 +50,7 @@ class Board {
         }
         this.topRow.render(this.drawSprite);
         this.frog.render(this.drawSprite);
-        this.gameStatus.render(this.renderer);
+        this.gameStatus.render(this.renderer, this.topRow);
     }
 
     spawnObjects(elapsedTime) {
@@ -91,6 +91,7 @@ class Board {
                 this.gameStatus.lost();
             }
             this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
+            this.gameStatus.reset();
         }
     }
 
