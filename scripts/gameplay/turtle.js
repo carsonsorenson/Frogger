@@ -1,6 +1,6 @@
 class Turtle extends Object {
     constructor(spec, laneHeight, width) {
-        super(spec.lane, spec.obj()[0], spec.moveRate, spec.start, laneHeight, width);
+        super(spec.lane, spec.obj()[0], spec.moveRate, spec.respawnRate, spec.start, laneHeight, width);
         this.type = 'turtle';
 
         this.numTurtles = Math.floor(Math.random() * (2) + 2);

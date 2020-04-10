@@ -1,6 +1,6 @@
 class Log extends Object {
     constructor(spec, laneHeight, width) {
-        super(spec.lane, spec.obj(), spec.moveRate, spec.start, laneHeight, width);
+        super(spec.lane, spec.obj(), spec.moveRate, spec.respawnRate, spec.start, laneHeight, width);
         this.type = 'log';
     }
 

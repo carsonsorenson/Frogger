@@ -27,6 +27,16 @@ class Board {
             {lane: 12, constructor: Car, moveRate: 8000, respawnRate: 3000, obj: this.sprites.getRandomCar, start: 'right'},
         ];
 
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < this.lanes.length; j++) {
+                this.objects.push(new this.lanes[j].constructor(this.lanes[j], this.laneHeight, this.width));
+            }
+            for (let j = 0; j < this.objects.length; j++) {
+                let rate = this.objects[j].respawnRate;
+                this.objects[j].update(rate, this.width);
+            }
+        }
+
         for (let i = 0; i < this.lanes.length; i++) {
             this.lanes[i].elapsedTime = Math.floor(Math.random() * this.lanes[i].respawnRate);
         }
@@ -91,6 +101,7 @@ class Board {
     }
 
     update(elapsedTime) {
+        console.log(this.objects.length);
         this.spawnObjects(elapsedTime);
         this.updateObjects(elapsedTime);
 

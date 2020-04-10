@@ -1,9 +1,10 @@
 class Object {
-    constructor(lane, obj, moveRate, start, laneHeight, width) {
+    constructor(lane, obj, moveRate, respawnRate, start, laneHeight, width) {
         this.lane = lane;
         this.img = obj;
         this.start = start;
         this.moveRate = moveRate;
+        this.respawnRate = respawnRate;
         start == 'left' ? this.rotation = 0 : this.rotation = Math.PI;
 
         this.getSize = function(laneHeight) {
