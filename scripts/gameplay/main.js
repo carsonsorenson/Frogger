@@ -25,8 +25,8 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
     function update(elapsedTime) {
         myInput.update(elapsedTime);
         if (!gameOver && !paused) {
-            board.update(elapsedTime);
             gameOver = board.gameOver();
+            board.update(elapsedTime);
         }
     }
 

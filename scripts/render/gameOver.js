@@ -3,8 +3,10 @@ MyGame.render.gameOver = (function(graphics, game, persistence) {
     let scoreName = document.getElementById("scoreName");
     let leaderboard = document.getElementById("leaderboard");
     let noLeaderBoard = document.getElementById("noLeaderboard");
+    let myScore = null;
 
     function render(score) {
+        myScore = score;
         graphics.drawDarkBackground();
         scoreName.value = "";
         gameOver.style.display = "block";
@@ -20,10 +22,17 @@ MyGame.render.gameOver = (function(graphics, game, persistence) {
 
     document.getElementById("submitScore").addEventListener(
         'click', function() {
-            //persistence.addScore(scoreName.value, score);
+            persistence.addScore(scoreName.value, myScore);
             gameOver.style.display = "none";
-            exit = true;
             game.showScreen('highScores');
+        }
+    )
+
+    document.getElementById("noLeaderboardButton").addEventListener(
+        'click', function() {
+            persistence.addScore(scoreName.value, myScore);
+            gameOver.style.display = "none";
+            game.showScreen('mainMenu');
         }
     )
 

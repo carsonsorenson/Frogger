@@ -12,6 +12,7 @@ class Board {
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows);
         this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
         this.gameStatus = new GameStatus(this.sprites.getFrogs, this.laneHeight, this.numRows, persistence);
+        this.visited = this.frog.lane;
 
         this.lanes = [
             {lane: 1, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getMediumLog, start: 'left'},
@@ -39,7 +40,14 @@ class Board {
     }
 
     gameOver() {
-        return this.gameStatus.numLives === 0 || this.topRow.numFrogs === 5;
+        if (this.topRow.numFrogs === 5) {
+            this.gameStatus.won();
+            return true;
+        }
+        else if (this.gameStatus.numLives === 0) {
+            return true;
+        }
+        return false;
     }
 
     processInput(key, elapsedTime) {
@@ -94,8 +102,17 @@ class Board {
             if (!this.frog.finished) {
                 this.gameStatus.lost();
             }
+            else {
+                this.gameStatus.safeArrival();
+            }
             this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
             this.gameStatus.reset();
+            this.visited = this.frog.lane;
+        }
+
+        if (this.frog.lane < this.visited && !this.frog.moving) {
+            this.gameStatus.forwardStep();
+            this.visited = this.frog.lane;
         }
     }
 

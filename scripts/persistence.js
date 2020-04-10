@@ -15,7 +15,7 @@ MyGame.persistence = (function() {
         scores = JSON.parse(previousScores);
     }
     if (scores.length > 0) {
-        highScore = scores[0];
+        highScore = scores[0].score;
     }
 
     function addKeyBinding(key, value) {
@@ -31,7 +31,7 @@ MyGame.persistence = (function() {
     function addScore(name, score) {
         scores.push({name, score});
         scores.sort((a, b) => (a.score < b.score) ? 1: -1);
-        highScore = scores[0];
+        highScore = scores[0].score;
         localStorage['Frogger.scores'] = JSON.stringify(scores);
         if (scores.length > amountToRemember) {
             removeScore();

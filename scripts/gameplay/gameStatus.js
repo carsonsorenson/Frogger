@@ -12,7 +12,30 @@ class GameStatus {
         this.highScore = persistence.highScore;
 
         this.setDimensions(this.laneHeight);
+    }
 
+    updateScore(amount) {
+        this.score += amount;
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+        }
+    }
+
+    won() {
+        this.updateScore(1000);
+    }
+
+    forwardStep() {
+        this.updateScore(10);
+    }
+
+    safeArrival() {
+        // arriving safely home gets 50 points
+        this.updateScore(50);
+
+        // 10 points per each unused 1/2 second of time
+        let leftOverTime = Math.ceil(this.remainingTime / 1000);
+        this.updateScore(10 * (2 * leftOverTime));
     }
 
     lost() {
@@ -25,6 +48,9 @@ class GameStatus {
 
     update(elapsedTime) {
         this.remainingTime -= elapsedTime;
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+        }
     }
 
 
