@@ -1,6 +1,5 @@
 class Board {
     constructor(numRows, graphics, objects, renderer, persistence) {
-        console.log(persistence);
         this.numRows = numRows;
         this.objects = objects;
         this.renderer = renderer;
@@ -37,6 +36,10 @@ class Board {
             [persistence.keyBindings.right]: (elapsedTime) => this.frog.moveRight(elapsedTime),
             [persistence.keyBindings.down]: (elapsedTime) => this.frog.moveDown(elapsedTime)
         }
+    }
+
+    gameOver() {
+        return this.gameStatus.numLives === 0 || this.topRow.numFrogs === 5;
     }
 
     processInput(key, elapsedTime) {

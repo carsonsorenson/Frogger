@@ -41,6 +41,13 @@ MyGame.graphics = (function(assets, objects) {
         )
     }
 
+    function drawDarkBackground() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+        ctx.fillRect(
+            0, 0, ctx.canvas.width, ctx.canvas.height
+        );
+    }
+
     function drawLines(rows) {
         ctx.beginPath();
         ctx.strokeStyle = "red";
@@ -111,6 +118,7 @@ MyGame.graphics = (function(assets, objects) {
     return {
         clear,
         drawBackground,
+        drawDarkBackground,
         drawLines,
         initialize,
         drawSprite,

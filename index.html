@@ -42,7 +42,7 @@
                     <div class="table-row-item"><p id="downItem"></p></div>
                 </div>
                 <div id="pauseRow" class="tableRow">
-                    <div class="table-row-item"><p>PAUSE/RESUME</p></div>
+                    <div class="table-row-item"><p>PAUSE</p></div>
                     <div class="table-row-item"><p id="pauseItem"></p></div>
                 </div>
             </div>
@@ -67,6 +67,25 @@
         </div>
         <div id="gameplay" class="screen">
             <canvas id="myCanvas"></canvas>
+            <div id="pauseGame">
+                <div id="menuItems" style="transform: translateX(50%);">
+                    <p class="menuButton" id="pauseMainMenu">MAIN MENU</p>
+                    <p class="menuButton" id="pauseReturn">RETURN TO GAME</p>
+                </div>
+            </div>
+            <div id="gameOver">
+                <h1>GAME OVER</h1>
+                <div id="leaderboard">
+                    <p>YOU MADE THE LEADERBOARD!</p>
+                    <label for="name">NAME</label>
+                    <input type="text" id="scoreName" name="scoreName" maxLength="10" size="12">
+                    <button type="button" id="submitScore">SUBMIT</button>
+                </div>
+                <div id="noLeaderboard">
+                    <p>BETTER LUCK NEXT TIME</p>
+                    <button type="button" id="noLeaderboardButton">MAIN MENU</button>
+                </div>
+            </div>
         </div>
     </div>
 

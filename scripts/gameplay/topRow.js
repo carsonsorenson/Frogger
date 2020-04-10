@@ -8,6 +8,8 @@ class TopRow {
         this.bushImage = this.sprites.getBush();
         this.lillyImage = this.sprites.getBushWithLillyPad();
         this.objects = [];
+        this.numFrogs = 0;
+    
         for (let i = 0; i < this.numCols; i++) {
             if ((i - 1) % 3 == 0) {
                 this.objects.push({

@@ -126,7 +126,7 @@ class Frog {
             }
 
             if (collidedWith === null && this.lane >= 1 && this.lane <= 5) {
-                //this.alive = false;
+                this.alive = false;
             }
         }
         else {
@@ -140,6 +140,7 @@ class Frog {
                     this.center.x = topRow.objects[i].center.x;
                     this.center.y = topRow.objects[i].center.y;
                     this.index = 12;
+                    topRow.numFrogs++;
                     topRow.objects[i].frog = this;
                 }
             }

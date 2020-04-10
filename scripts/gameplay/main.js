@@ -4,26 +4,44 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
     let board;
     let myInput;
     let paused;
+    let gameOver;
+    let cancelNextFrame;
 
     function processInput(elapsedTime) {
-        for (let key in myInput.inputBuffer) {
-            if (key === persistence.keyBindings.pause) {
-                paused = !paused;
-            }
-            else {
-                board.processInput(key, elapsedTime);
+        if (!gameOver && !paused) {
+            for (let key in myInput.inputBuffer) {
+                if (key === persistence.keyBindings.pause) {
+                    paused = true;
+                    renderer.pause.initialize();
+                    myInput.update(elapsedTime);
+                }
+                else {
+                    board.processInput(key, elapsedTime);
+                }
             }
         }
     }
 
     function update(elapsedTime) {
         myInput.update(elapsedTime);
-        board.update(elapsedTime);
+        if (!gameOver && !paused) {
+            board.update(elapsedTime);
+            gameOver = board.gameOver();
+        }
     }
 
     function render() {
         graphics.drawBackground();
         board.render();
+        if (paused) {
+            renderer.pause.render();
+            paused = renderer.pause.stayPaused;
+            cancelNextFrame = renderer.pause.exit;
+        }
+        if (gameOver) {
+            renderer.gameOver.render(board.gameStatus.score);
+            cancelNextFrame = true;
+        }
     }
 
     function gameLoop(time) {
@@ -34,7 +52,7 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         update(elapsedTime);
         render();
 
-        if (board.frog.alive) {
+        if (!cancelNextFrame) {
             requestAnimationFrame(gameLoop);
         }
     }
@@ -42,6 +60,8 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
     function run() {
         myInput = input.Keyboard();
         paused = false;
+        gameOver = false;
+        cancelNextFrame = false;
         lastTime = performance.now();
         board = new Board(rows, graphics, objects, renderer, persistence);
         requestAnimationFrame(gameLoop);
