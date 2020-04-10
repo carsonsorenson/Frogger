@@ -35,7 +35,7 @@ MyGame.game = (function(screens) {
         for (screen in screens) {
             screens[screen].initialize(showScreen);
         }
-        showScreen('gameplay')
+        showScreen('mainMenu');
     }
 
     return {

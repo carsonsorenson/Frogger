@@ -15,7 +15,15 @@ MyGame.loader = (function() {
             message: 'Persistence loaded'
         },
         {
-            scripts: ['menu/main', 'menu/controls', 'menu/credits', 'menu/highScores', 'menu/mainMenu'],
+            scripts: ['menu/main'],
+            message: 'menu controller loaded'
+        },
+        {
+            scripts: ['menu/controls', 'menu/credits', 'menu/highScores'],
+            message: 'screens loaded'
+        },
+        {
+            scripts: ['menu/mainMenu'],
             message: 'Menu loaded'
         },
         {
@@ -46,12 +54,6 @@ MyGame.loader = (function() {
             scripts: ['gameplay/main'],
             message: 'Gameplay all loaded'
         }
-        /*{
-            scripts: ['gameplay/car', 'gameplay/log', 'gameplay/turtle', 
-                'gameplay/topRow', 'gameplay/frog', 'gameplay/board','gameplay/main'
-            ],
-            message: 'Main gameplay loaded'
-        }*/
     ];
 
     let assetOrder = [

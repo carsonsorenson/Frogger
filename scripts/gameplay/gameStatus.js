@@ -1,5 +1,5 @@
 class GameStatus {
-    constructor(sprites, laneHeight, numRows) {
+    constructor(sprites, laneHeight, numRows, persistence) {
         this.numRows = numRows;
         this.numLives = 3;
         this.frogImage = sprites()[13];
@@ -9,7 +9,7 @@ class GameStatus {
         this.remainingTime = this.totalTime;
 
         this.score = 0;
-        this.highScore = 100000;
+        this.highScore = persistence.highScore;
 
         this.setDimensions(this.laneHeight);
 

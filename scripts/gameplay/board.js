@@ -1,5 +1,6 @@
 class Board {
-    constructor(numRows, graphics, objects, renderer, keyBindings) {
+    constructor(numRows, graphics, objects, renderer, persistence) {
+        console.log(persistence);
         this.numRows = numRows;
         this.objects = objects;
         this.renderer = renderer;
@@ -11,7 +12,7 @@ class Board {
         this.sprites = objects.sprites;
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows);
         this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
-        this.gameStatus = new GameStatus(this.sprites.getFrogs, this.laneHeight, this.numRows);
+        this.gameStatus = new GameStatus(this.sprites.getFrogs, this.laneHeight, this.numRows, persistence);
 
         this.lanes = [
             {lane: 1, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getMediumLog, start: 'left'},
@@ -31,10 +32,10 @@ class Board {
         }
 
         this.bindings = {
-            [keyBindings.left]: (elapsedTime) => this.frog.moveLeft(elapsedTime),
-            [keyBindings.up]: (elapsedTime) => this.frog.moveUp(elapsedTime),
-            [keyBindings.right]: (elapsedTime) => this.frog.moveRight(elapsedTime),
-            [keyBindings.down]: (elapsedTime) => this.frog.moveDown(elapsedTime)
+            [persistence.keyBindings.left]: (elapsedTime) => this.frog.moveLeft(elapsedTime),
+            [persistence.keyBindings.up]: (elapsedTime) => this.frog.moveUp(elapsedTime),
+            [persistence.keyBindings.right]: (elapsedTime) => this.frog.moveRight(elapsedTime),
+            [persistence.keyBindings.down]: (elapsedTime) => this.frog.moveDown(elapsedTime)
         }
     }
 

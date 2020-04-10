@@ -43,7 +43,7 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         myInput = input.Keyboard();
         paused = false;
         lastTime = performance.now();
-        board = new Board(rows, graphics, objects, renderer, persistence.keyBindings);
+        board = new Board(rows, graphics, objects, renderer, persistence);
         requestAnimationFrame(gameLoop);
     }
 

@@ -1,4 +1,4 @@
-MyGame.screens['highScores'] = (function() {
+MyGame.screens['highScores'] = (function(persistence) {
     function initialize(showScreen) {
         document.getElementById("highScoresBack").addEventListener(
             'click', function() {
@@ -7,10 +7,12 @@ MyGame.screens['highScores'] = (function() {
         )
     }
 
-    function run() {}
+    function run() {
+        persistence.updateScores();
+    }
 
     return {
         initialize,
         run
     }
-}());
+}(MyGame.persistence));

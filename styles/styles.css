@@ -151,3 +151,8 @@ h1 {
       opacity: 0;
     }
 }
+
+/* high scores */
+#highScoreList {
+    list-style: none;
+}
