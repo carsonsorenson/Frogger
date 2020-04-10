@@ -12,7 +12,6 @@ class Turtle extends Object {
 
         this.sinking = false;
         let random = Math.random();
-        console.log(random);
         if (random > 0.60) {
             this.sinking = true;
         }
@@ -79,12 +78,27 @@ class Turtle extends Object {
     }
 
     handleCollision(elapsedTime, frog, width) {
-        if (this.rotation == 0) {
-            frog.center.x += (width / this.moveRate) * elapsedTime;
+        let minDist = 100;
+        let minTurtle = null;
+        for (let i = 0; i < this.turtles.length; i++) {
+            let delta = Math.abs(frog.center.x - this.turtles[i].turtleCenter.x);
+            if (delta < minDist) {
+                minDist = delta;
+                minTurtle = this.turtles[i];
+            }
+        }
+
+        if (minTurtle.sinking && minTurtle.index > 1) {
+            return false;
         }
         else {
-            frog.center.x -= (width / this.moveRate) * elapsedTime;
+            if (this.rotation == 0) {
+                frog.center.x += (width / this.moveRate) * elapsedTime;
+            }
+            else {
+                frog.center.x -= (width / this.moveRate) * elapsedTime;
+            }
+            return true;
         }
-        return true;
     }
 }
