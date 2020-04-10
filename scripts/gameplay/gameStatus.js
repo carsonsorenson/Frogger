@@ -9,7 +9,7 @@ class GameStatus {
         this.remainingTime = this.totalTime;
 
         this.score = 0;
-        this.highScore = 1000;
+        this.highScore = 100000;
 
         this.setDimensions(this.laneHeight);
 

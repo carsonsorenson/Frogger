@@ -15,10 +15,10 @@ class Board {
 
         this.lanes = [
             {lane: 1, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getMediumLog, start: 'left'},
-            {lane: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, start: 'right'},
+            {lane: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, obj2: this.sprites.getTurtlesDiving, start: 'right'},
             {lane: 3, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getLongLog, start: 'left'},
             {lane: 4, constructor: Log, moveRate: 14000, respawnRate: 6000, obj: this.sprites.getShortLog, start: 'left'},
-            {lane: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, start: 'right'},
+            {lane: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, obj2: this.sprites.getTurtlesDiving, start: 'right'},
             {lane: 8, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, start: 'right'},
             {lane: 9, constructor: Car, moveRate: 8000, respawnRate: 4000, obj: this.sprites.getFireTruck, start: 'left'},
             {lane: 10, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, start: 'right'},

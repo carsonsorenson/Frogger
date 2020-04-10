@@ -28,16 +28,28 @@ MyGame.objects.sprites = (function(assets) {
             {image: assets.sprites, x: 79, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
             {image: assets.sprites, x: 153, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
             {image: assets.sprites, x: 227, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 301, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 400, y: 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 474, y: 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 5, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 79, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 153, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 227, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
             {image: assets.sprites, x: 301, y: spriteHeight + 5, width: 74, height: spriteHeight - 15}
         ];
     }
 
     function getTurtlesDiving() {
         return [
-            {image: assets.sprites, x: 374, y: spriteHeight, width: 74, height: spriteHeight},
-            {image: assets.sprites, x: 448, y: spriteHeight, width: 65, height: spriteHeight},
-            {image: assets.sprites, x: 513, y: spriteHeight, width: 45, height: spriteHeight},
-            {image: assets.sprites, x: 560, y: spriteHeight, width: 40, height: spriteHeight}
+            {image: assets.sprites, x: 374, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
+            {image: assets.sprites, x: 448, y: spriteHeight + 5, width: 65, height: spriteHeight - 15},
+            {image: assets.sprites, x: 513, y: spriteHeight + 5, width: 45, height: spriteHeight - 15},
+            {image: assets.sprites, x: 560, y: spriteHeight + 5, width: 40, height: spriteHeight - 15},
+            {image: assets.sprites, x: 0, y: 0, width: 0, height: 0},
+            {image: assets.sprites, x: 560, y: spriteHeight + 5, width: 40, height: spriteHeight - 15},
+            {image: assets.sprites, x: 513, y: spriteHeight + 5, width: 45, height: spriteHeight - 15},
+            {image: assets.sprites, x: 448, y: spriteHeight + 5, width: 65, height: spriteHeight - 15},
+            {image: assets.sprites, x: 374, y: spriteHeight + 5, width: 74, height: spriteHeight - 15},
         ];
     }
 
