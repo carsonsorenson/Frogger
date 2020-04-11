@@ -3,6 +3,7 @@ class Frog {
         this.images = obj();
         this.laneHeight = laneHeight;
         this.lane = 13;
+        this.width = width;
 
         this.center = {
             x: width / 2,
@@ -130,6 +131,12 @@ class Frog {
             if (collidedWith === null && this.lane >= 1 && this.lane <= 5) {
                 this.alive = false;
             }
+
+            let frogRight = this.center.x + (this.size.width / 2);
+            let frogLeft = this.center.x - (this.size.width / 2);
+            if (frogRight < 0 || frogLeft > this.width) {
+                this.alive = false;
+            }
         }
         else {
             this.alive = false;
@@ -179,6 +186,7 @@ class Frog {
     }
 
     setDimensions(laneHeight, width, newWidth) {
+        this.width = width;
         this.size.width = laneHeight
         this.size.height = laneHeight;
 

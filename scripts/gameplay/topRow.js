@@ -16,7 +16,7 @@ class TopRow {
 
         this.check = 7000;
         this.elapsed = this.check;
-        this.probability = 0.4;
+        this.probability = 0.3;
         this.time = 6000;
 
     
@@ -44,6 +44,18 @@ class TopRow {
         }
     }
 
+    shuffle(array) {
+        let curIndex = this.numCols;
+        while (curIndex !== 0) {
+            let randomIndex = Math.floor(Math.random() * curIndex);
+            curIndex--;
+
+            let tmp = array[curIndex];
+            array[curIndex] = array[randomIndex];
+            array[randomIndex] = tmp;
+        }
+    }
+
     checkToAddObject() {
         let type = null;
         let r = Math.random();
@@ -54,22 +66,13 @@ class TopRow {
             type = 'alligator';
         }
 
-        type = 'alligator';
-
         if (type !== null) {
             let indices = [];
             for (let i = 0; i < this.numCols; i++) {
                 indices.push(i);
             }
-            let curIndex = this.numCols;
-            while (curIndex !== 0) {
-                let randomIndex = Math.floor(Math.random() * curIndex);
-                curIndex--;
+            this.shuffle(indices);
 
-                let tmp = indices[curIndex];
-                indices[curIndex] = indices[randomIndex];
-                indices[randomIndex] = tmp;
-            }
             for (let i = 0; i < this.numCols; i++) {
                 let obj = this.objects[indices[i]];
                 if (obj.type === 'lilly' && !obj.frog) {
@@ -122,7 +125,8 @@ class TopRow {
                 this.objects[i].image,
                 this.objects[i].center,
                 {width: this.laneWidth + 1, height: this.laneWidth}
-            )
+            );
+
             if (this.objects[i].frog) {
                 this.objects[i].frog.render(drawSprite);
             }
@@ -139,7 +143,7 @@ class TopRow {
                     this.alligatorImage,
                     this.objects[i].center,
                     {width: this.laneWidth * 0.9, height: this.laneWidth * 0.9}
-                )
+                );
             }
         }
     }

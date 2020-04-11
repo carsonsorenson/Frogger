@@ -13,7 +13,6 @@ class Board {
         this.gameStatus = new GameStatus(this.sprites, this.laneHeight, this.numRows, persistence);
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows, this.gameStatus);
         this.visited = this.frog.lane;
-
         this.alligatorFrequency = 0.5;
 
         this.lanes = [
