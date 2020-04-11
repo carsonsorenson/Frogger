@@ -14,8 +14,10 @@ class Board {
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows, this.gameStatus);
         this.visited = this.frog.lane;
 
+        this.alligatorFrequency = 0.5;
+
         this.lanes = [
-            {lane: 1, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getMediumLog, start: 'left'},
+            {lane: 1, constructor: 'logOrAlligator', moveRate: 10000, respawnRate: 5000, start: 'left'},
             {lane: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, obj2: this.sprites.getTurtlesDiving, start: 'right'},
             {lane: 3, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getLongLog, start: 'left'},
             {lane: 4, constructor: Log, moveRate: 14000, respawnRate: 6000, obj: this.sprites.getShortLog, start: 'left'},
@@ -29,7 +31,7 @@ class Board {
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < this.lanes.length; j++) {
-                this.objects.push(new this.lanes[j].constructor(this.lanes[j], this.laneHeight, this.width));
+                this.objects.push(this.constructLane(this.lanes[j], this.laneHeight, this.width));
             }
             for (let j = 0; j < this.objects.length; j++) {
                 let rate = this.objects[j].respawnRate;
@@ -47,6 +49,22 @@ class Board {
             [persistence.keyBindings.up]: (elapsedTime) => this.frog.moveUp(elapsedTime),
             [persistence.keyBindings.right]: (elapsedTime) => this.frog.moveRight(elapsedTime),
             [persistence.keyBindings.down]: (elapsedTime) => this.frog.moveDown(elapsedTime)
+        }
+    }
+
+    constructLane(spec, laneHeight, width) {
+        if (spec.constructor === 'logOrAlligator') {
+            if (Math.random() < this.alligatorFrequency) {
+                spec.obj = this.sprites.getAlligator;
+                return new Alligator(spec, laneHeight, width);
+            }
+            else {
+                spec.obj = this.sprites.getMediumLog;
+                return new Log(spec, laneHeight, width);
+            }
+        }
+        else {
+            return new spec.constructor(spec, laneHeight, width);
         }
     }
 
@@ -84,8 +102,7 @@ class Board {
             this.lanes[i].elapsedTime += elapsedTime;
             if (this.lanes[i].elapsedTime > this.lanes[i].respawnRate) {
                 this.lanes[i].elapsedTime = 0;
-                const obj = new this.lanes[i].constructor(this.lanes[i], this.laneHeight, this.width);
-                this.objects.push(obj);
+                this.objects.push(this.constructLane(this.lanes[i], this.laneHeight, this.width));
             }
         }
     }

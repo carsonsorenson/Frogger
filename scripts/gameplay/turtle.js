@@ -6,7 +6,7 @@ class Turtle extends Object {
         this.numTurtles = Math.floor(Math.random() * (2) + 2);
         this.turtleImages = spec.obj();
         this.sinkingImages = spec.obj2();
-        this.changeTime = 100;
+        this.changeTime = 150;
         this.elapsed = 0;
         this.index = 0;
 

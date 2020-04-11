@@ -2,6 +2,9 @@ MyGame.objects.sprites = (function(assets) {
     let spriteRows = 7;
     let spriteHeight = assets.sprites.height / spriteRows;
 
+    let alligatorRows = 2;
+    let alligatorHeight = assets.alligatorSprites.height / alligatorRows;
+
     let cars = [
         {image: assets.sprites, x: 10, y: 6 * spriteHeight, width: 130, height: spriteHeight},
         {image: assets.sprites, x: 155, y: 6 * spriteHeight, width: 135, height: spriteHeight},
@@ -86,6 +89,13 @@ MyGame.objects.sprites = (function(assets) {
         return {image: assets.sprites, x: 498, y: 2 * spriteHeight, width: spriteHeight, height: spriteHeight};
     }
 
+    function getAlligator() {
+        return [
+            {image: assets.alligatorSprites, x: 0, y: alligatorHeight - 5, width: assets.alligatorSprites.width, height: alligatorHeight},
+            {image: assets.alligatorSprites, x: 0, y: 0, width: assets.alligatorSprites.width, height: alligatorHeight}
+        ]
+    }
+
     function getFrogs() {
         let frogHeight = assets.frogSprites.height / 8;
         let frogWidth = assets.frogSprites.width / 12;
@@ -118,6 +128,7 @@ MyGame.objects.sprites = (function(assets) {
         getDeath,
         getBush,
         getBushWithLillyPad,
+        getAlligator,
         getFrogs
     }
 

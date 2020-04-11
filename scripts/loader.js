@@ -43,7 +43,7 @@ MyGame.loader = (function() {
             message: 'Gameplay base object loaded'
         },
         {
-            scripts: ['gameplay/log', 'gameplay/car', 'gameplay/turtle', 'gameplay/frog', 'gameplay/topRow', 'gameplay/gameStatus'],
+            scripts: ['gameplay/log', 'gameplay/alligator', 'gameplay/car', 'gameplay/turtle', 'gameplay/frog', 'gameplay/topRow', 'gameplay/gameStatus'],
             message: 'Gameplay objects loaded'
         },
         {
@@ -72,6 +72,10 @@ MyGame.loader = (function() {
         {
             key: 'frogSprites',
             source: '/assets/frogSprites.png'
+        },
+        {
+            key: 'alligatorSprites',
+            source: '/assets/alligator.png'
         }
     ];
 
