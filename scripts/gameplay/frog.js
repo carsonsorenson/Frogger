@@ -21,6 +21,9 @@ class Frog {
         this.direction;
         this.newPos;
 
+        // move across cell in 1.5/10 of a second
+        this.moveRate = 150;
+
         this.cycleTime = 180;
         this.elapsedTime = 0;
     }
@@ -64,8 +67,7 @@ class Frog {
     }
 
     updateMovement(elapsedTime) {
-        // move across cell in 2/10 of a second
-        let moveRate = this.laneHeight / 150 * elapsedTime;
+        let moveRate = this.laneHeight / this.moveRate * elapsedTime;
 
         if (this.direction == 'right') {
             this.center.x += moveRate;

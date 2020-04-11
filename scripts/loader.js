@@ -51,6 +51,10 @@ MyGame.loader = (function() {
             message: 'Gameplay board loaded'
         },
         {
+            scripts: ['gameplay/attract'],
+            message: 'Attract mode loaded'
+        },
+        {
             scripts: ['gameplay/main'],
             message: 'Gameplay all loaded'
         }

@@ -20,11 +20,11 @@ class Board {
             {lane: 3, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getLongLog, start: 'left'},
             {lane: 4, constructor: Log, moveRate: 14000, respawnRate: 6000, obj: this.sprites.getShortLog, start: 'left'},
             {lane: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, obj2: this.sprites.getTurtlesDiving, start: 'right'},
-            {lane: 8, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, start: 'right'},
-            {lane: 9, constructor: Car, moveRate: 8000, respawnRate: 4000, obj: this.sprites.getFireTruck, start: 'left'},
-            {lane: 10, constructor: Car, moveRate: 6000, respawnRate: 3000, obj: this.sprites.getRandomCar, start: 'right'},
-            {lane: 11, constructor: Car, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getSemi, start: 'left'},
-            {lane: 12, constructor: Car, moveRate: 8000, respawnRate: 3000, obj: this.sprites.getRandomCar, start: 'right'},
+            {lane: 8, constructor: Car, moveRate: 13000, respawnRate: 7000, obj: this.sprites.getSemi, start: 'right'},
+            {lane: 9, constructor: Car, moveRate: 9000, respawnRate: 4000, obj: this.sprites.getFireTruck, start: 'left'},
+            {lane: 10, constructor: Car, moveRate: 7000, respawnRate: 3500, obj: this.sprites.getRandomCar, start: 'right'},
+            {lane: 11, constructor: Car, moveRate: 16000, respawnRate: 9000, obj: this.sprites.getSemi, start: 'left'},
+            {lane: 12, constructor: Car, moveRate: 13000, respawnRate: 6000, obj: this.sprites.getRandomCar, start: 'right'},
         ];
 
         for (let i = 0; i < 3; i++) {
@@ -38,7 +38,8 @@ class Board {
         }
 
         for (let i = 0; i < this.lanes.length; i++) {
-            this.lanes[i].elapsedTime = Math.floor(Math.random() * this.lanes[i].respawnRate);
+            this.lanes[i].elapsedTime = this.lanes[i].respawnRate;
+            //this.lanes[i].elapsedTime = Math.floor(Math.random() * this.lanes[i].respawnRate);
         }
 
         this.bindings = {
@@ -55,6 +56,9 @@ class Board {
             return true;
         }
         else if (this.gameStatus.numLives === 0) {
+            return true;
+        }
+        else if (this.gameStatus.remainingTime <= 0) {
             return true;
         }
         return false;
@@ -101,7 +105,6 @@ class Board {
     }
 
     update(elapsedTime) {
-        console.log(this.objects.length);
         this.spawnObjects(elapsedTime);
         this.updateObjects(elapsedTime);
 
@@ -129,6 +132,7 @@ class Board {
 
     setDimensions(graphics) {
         this.laneHeight = graphics.height / this.numRows;
+        this.laneWidth = graphics.width / this.numRows;
         for (let i = 0; i < this.objects.length; i++) {
             this.objects[i].setDimensions(this.laneHeight, this.width, graphics.width);
         }

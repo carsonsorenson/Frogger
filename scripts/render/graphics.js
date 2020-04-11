@@ -23,6 +23,26 @@ MyGame.graphics = (function(assets, objects) {
         ctx.fillText(spec.text, spec.pos.x, spec.pos.y);
     }
 
+    function drawLines() {
+        ctx.beginPath();
+        ctx.strokeStyle = "red";
+        let split = ctx.canvas.height / 15;
+        for (let i = 1; i < 15; i++) {
+            let y = split * i;
+            ctx.moveTo(0, y);
+            ctx.lineTo(ctx.canvas.width, y);
+            ctx.stroke();
+        }
+
+        let split2 = ctx.canvas.width / 15;
+        for (let i = 1; i < 15; i++) {
+            let x = split2 * i;
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, ctx.canvas.height);
+            ctx.stroke();
+        }
+    }
+
     function drawRect(spec) {
         ctx.fillStyle = spec.fillStyle;
         ctx.fillRect(
@@ -46,25 +66,6 @@ MyGame.graphics = (function(assets, objects) {
         ctx.fillRect(
             0, 0, ctx.canvas.width, ctx.canvas.height
         );
-    }
-
-    function drawLines(rows) {
-        ctx.beginPath();
-        ctx.strokeStyle = "red";
-        let split = ctx.canvas.height / rows;
-        for (let i = 1; i < rows; i++) {
-            let y = split * i;
-            ctx.moveTo(0, y);
-            ctx.lineTo(ctx.canvas.width, y);
-            ctx.stroke();
-        }
-        let split2 = ctx.canvas.width / rows;
-        for (let i = 1; i < rows; i++) {
-            let x = split2 * i;
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, ctx.canvas.height);
-            ctx.stroke();
-        }
     }
 
     function drawSprite(s, center, size, rotation) {
