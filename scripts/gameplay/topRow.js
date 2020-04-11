@@ -12,10 +12,13 @@ class TopRow {
         this.numFrogs = 0;
 
         this.flyImage = sprites.getFly();
-        this.flyCheck = 7000;
-        this.flyElapsed = this.flyCheck;
-        this.flyProbablity = 0.5;
-        this.flyTime = 6000;
+        this.alligatorImage = sprites.getAlligatorHead();
+
+        this.check = 7000;
+        this.elapsed = this.check;
+        this.probability = 0.4;
+        this.time = 6000;
+
     
         for (let i = 0; i < this.numCols; i++) {
             if ((i - 1) % 3 == 0) {
@@ -24,7 +27,8 @@ class TopRow {
                     image: this.lillyImage,
                     frog: null,
                     fly: false,
-                    flyElapsed: 0
+                    alligator: false,
+                    elapsed: 0
                 });
             }
             else {
@@ -40,8 +44,19 @@ class TopRow {
         }
     }
 
-    checkToAddFly() {
-        if (Math.random() < this.flyProbablity) {
+    checkToAddObject() {
+        let type = null;
+        let r = Math.random();
+        if (r < this.probability) {
+            type = 'fly';
+        }
+        else if (r < this.probability * 2) {
+            type = 'alligator';
+        }
+
+        type = 'alligator';
+
+        if (type !== null) {
             let indices = [];
             for (let i = 0; i < this.numCols; i++) {
                 indices.push(i);
@@ -57,8 +72,13 @@ class TopRow {
             }
             for (let i = 0; i < this.numCols; i++) {
                 let obj = this.objects[indices[i]];
-                if (obj.type === 'lilly' && !obj.fly && !obj.frog) {
-                    obj.fly = true;
+                if (obj.type === 'lilly' && !obj.frog) {
+                    if (type === 'fly') {
+                        obj.fly = true;
+                    }
+                    else if (type === 'alligator') {
+                        obj.alligator = true;
+                    }
                     break;
                 }
             }
@@ -66,10 +86,10 @@ class TopRow {
     }
 
     update(elapsedTime) {
-        this.flyElapsed += elapsedTime;
-        if (this.flyElapsed > this.flyCheck) {
-            this.flyElapsed = 0;
-            this.checkToAddFly();
+        this.elapsed += elapsedTime;
+        if (this.elapsed > this.check) {
+            this.elapsed = 0;
+            this.checkToAddObject();
         }
 
         for (let i = 0; i < this.objects.length; i++) {
@@ -77,15 +97,20 @@ class TopRow {
                 this.objects[i].frog.updateSprite(elapsedTime);
                 if (this.objects[i].fly) {
                     this.objects[i].fly = false;
-                    this.objects[i].flyElapsed = 0;
+                    this.objects[i].elapsed = 0;
                     this.gameStatus.caughtFly();
                 }
+                else if (this.objects[i].alligator) {
+                    this.objects[i].alligator = false;
+                    this.objects[i].elapsed = 0;
+                }
             }
-            else if (this.objects[i].fly) {
-                this.objects[i].flyElapsed += elapsedTime;
-                if (this.objects[i].flyElapsed > this.flyTime) {
-                    this.objects[i].flyElapsed = 0;
+            else if (this.objects[i].fly || this.objects[i].alligator) {
+                this.objects[i].elapsed += elapsedTime;
+                if (this.objects[i].elapsed > this.time) {
+                    this.objects[i].elapsed = 0;
                     this.objects[i].fly = false;
+                    this.objects[i].alligator = false;
                 }
             }
         }
@@ -101,12 +126,20 @@ class TopRow {
             if (this.objects[i].frog) {
                 this.objects[i].frog.render(drawSprite);
             }
+
             if (this.objects[i].fly) {
                 drawSprite(
                     this.flyImage,
-                    this.objects[i].center,
+                    {x: this.objects[i].center.x, y: this.objects[i].center.y * 1.4},
                     {width: this.laneWidth * 0.8, height: this.laneWidth * 0.8}
                 );
+            }
+            else if (this.objects[i].alligator) {
+                drawSprite(
+                    this.alligatorImage,
+                    this.objects[i].center,
+                    {width: this.laneWidth * 0.9, height: this.laneWidth * 0.9}
+                )
             }
         }
     }

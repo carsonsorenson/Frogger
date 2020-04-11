@@ -137,13 +137,13 @@ class Frog {
                 let delta = topRow.objects[i].center.x;
                 let diff = Math.abs(this.center.x - delta);
 
-                if (diff < (this.size.width / 2) && topRow.objects[i].type === 'lilly' && topRow.objects[i].frog === null) {
+                if (diff < (this.size.width / 2) && topRow.objects[i].type === 'lilly' && topRow.objects[i].frog === null && !topRow.objects[i].alligator) {
+                    topRow.objects[i].frog = this;
                     this.finished = true;
+                    topRow.numFrogs++;
                     this.center.x = topRow.objects[i].center.x;
                     this.center.y = topRow.objects[i].center.y;
                     this.index = 12;
-                    topRow.numFrogs++;
-                    topRow.objects[i].frog = this;
                 }
             }
         }

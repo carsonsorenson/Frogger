@@ -96,6 +96,10 @@ MyGame.objects.sprites = (function(assets) {
         ]
     }
 
+    function getAlligatorHead() {
+        return {image: assets.alligatorSprites, x: 66, y: 0, width: 30, height: 30};
+    }
+
     function getFrogs() {
         let frogHeight = assets.frogSprites.height / 8;
         let frogWidth = assets.frogSprites.width / 12;
@@ -129,6 +133,7 @@ MyGame.objects.sprites = (function(assets) {
         getBush,
         getBushWithLillyPad,
         getAlligator,
+        getAlligatorHead,
         getFrogs
     }
 

@@ -41,7 +41,6 @@ class Board {
 
         for (let i = 0; i < this.lanes.length; i++) {
             this.lanes[i].elapsedTime = this.lanes[i].respawnRate;
-            //this.lanes[i].elapsedTime = Math.floor(Math.random() * this.lanes[i].respawnRate);
         }
 
         this.bindings = {
