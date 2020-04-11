@@ -9,9 +9,9 @@ class Board {
         this.drawSprite = graphics.drawSprite;
         this.objects = [];
         this.sprites = objects.sprites;
-        this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows);
         this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
-        this.gameStatus = new GameStatus(this.sprites.getFrogs, this.laneHeight, this.numRows, persistence);
+        this.gameStatus = new GameStatus(this.sprites, this.laneHeight, this.numRows, persistence);
+        this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows, this.gameStatus);
         this.visited = this.frog.lane;
 
         this.lanes = [
@@ -114,7 +114,7 @@ class Board {
 
         if (!this.frog.alive) {
             if (!this.frog.finished) {
-                this.gameStatus.lost();
+                this.gameStatus.lost(this.frog.center);
             }
             else {
                 this.gameStatus.safeArrival();

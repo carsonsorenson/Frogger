@@ -2,7 +2,6 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
     let lastTime;
     let rows;
     let board;
-    //let attract;
     let myInput;
     let paused;
     let gameOver;
@@ -28,7 +27,6 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         if (!gameOver && !paused) {
             gameOver = board.gameOver();
             board.update(elapsedTime);
-            //attract.update(elapsedTime);
         }
     }
 
@@ -36,7 +34,6 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         graphics.drawBackground();
         //graphics.drawLines();
         board.render();
-        //attract.render();
         if (paused) {
             renderer.pause.render();
             paused = renderer.pause.stayPaused;
@@ -68,7 +65,6 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         cancelNextFrame = false;
         lastTime = performance.now();
         board = new Board(rows, graphics, objects, renderer, persistence);
-        //attract = new Attract(board);
         requestAnimationFrame(gameLoop);
     }
 

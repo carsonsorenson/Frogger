@@ -2,7 +2,7 @@ class GameStatus {
     constructor(sprites, laneHeight, numRows, persistence) {
         this.numRows = numRows;
         this.numLives = 3;
-        this.frogImage = sprites()[13];
+        this.frogImage = sprites.getFrogs()[13];
         this.laneHeight = laneHeight;
 
         this.totalTime = 60000;
@@ -10,6 +10,12 @@ class GameStatus {
 
         this.score = 0;
         this.highScore = persistence.highScore;
+
+        this.isDead = false;
+        this.deadTime = 2000;
+        this.deadElapsed = 0;
+        this.deadImg = sprites.getDeath();
+        this.deadCenter;
 
         this.setDimensions(this.laneHeight);
     }
@@ -38,8 +44,14 @@ class GameStatus {
         this.updateScore(10 * (2 * leftOverTime));
     }
 
-    lost() {
+    caughtFly() {
+        this.updateScore(200);
+    }
+
+    lost(center) {
         this.numLives--;
+        this.deadCenter = center;
+        this.isDead = true;
     }
 
     reset() {
@@ -51,6 +63,13 @@ class GameStatus {
         if (this.score > this.highScore) {
             this.highScore = this.score;
         }
+        if (this.isDead) {
+            this.deadElapsed += elapsedTime;
+            if (this.deadElapsed > this.deadTime) {
+                this.deadElapsed = 0;
+                this.isDead = false;
+            }
+        }
     }
 
 
@@ -58,6 +77,9 @@ class GameStatus {
         renderer.frogLives.render(this.frogImage, this.numLives, this.center, this.size);
         renderer.timeBar.render(this.remainingTime, this.totalTime, this.laneHeight);
         renderer.score.render(topRow, this.score, this.highScore);
+        if (this.isDead) {
+            renderer.death.render(this.deadImg, this.deadCenter, this.laneHeight);
+        }
     }
 
     setDimensions(laneHeight) {

@@ -12,7 +12,7 @@ class Turtle extends Object {
 
         this.sinking = false;
         let random = Math.random();
-        if (random > 0.60) {
+        if (random > 0.70) {
             this.sinking = true;
         }
 
