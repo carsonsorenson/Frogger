@@ -40,7 +40,7 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
             cancelNextFrame = renderer.pause.exit;
         }
         if (gameOver) {
-            renderer.gameOver.render(board.gameStatus.score);
+            renderer.gameOver.render(board.gameStatus.score, board.gameOverMessage);
             cancelNextFrame = true;
         }
     }

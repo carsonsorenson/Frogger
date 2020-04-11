@@ -3,9 +3,10 @@ MyGame.render.gameOver = (function(graphics, game, persistence) {
     let scoreName = document.getElementById("scoreName");
     let leaderboard = document.getElementById("leaderboard");
     let noLeaderBoard = document.getElementById("noLeaderboard");
+    let gameOverMessage = document.getElementById("gameOverMessage");
     let myScore = null;
 
-    function render(score) {
+    function render(score, message) {
         myScore = score;
         graphics.drawDarkBackground();
         scoreName.value = "";
@@ -18,6 +19,7 @@ MyGame.render.gameOver = (function(graphics, game, persistence) {
             leaderboard.style.display = "none";
             noLeaderBoard.style.display = "block";
         }
+        gameOverMessage.innerHTML = message;
     }
 
     document.getElementById("submitScore").addEventListener(

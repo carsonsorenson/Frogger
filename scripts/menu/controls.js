@@ -1,9 +1,9 @@
 MyGame.screens['controls'] = (function(persistence) {;
     if (!('left' in persistence.keyBindings)) {
-        persistence.addKeyBinding('left', 'a');
-        persistence.addKeyBinding('right', 'd');
-        persistence.addKeyBinding('up', 'w');
-        persistence.addKeyBinding('down', 's');
+        persistence.addKeyBinding('left', 'ArrowLeft');
+        persistence.addKeyBinding('right', 'ArrowRight');
+        persistence.addKeyBinding('up', 'ArrowUp');
+        persistence.addKeyBinding('down', 'ArrowDown');
         persistence.addKeyBinding('pause', 'Escape');
     }
 

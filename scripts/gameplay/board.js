@@ -14,11 +14,12 @@ class Board {
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows, this.gameStatus);
         this.visited = this.frog.lane;
         this.alligatorFrequency = 0.5;
+        this.gameOverMessage = "";
 
         this.lanes = [
-            {lane: 1, constructor: 'logOrAlligator', moveRate: 10000, respawnRate: 5000, start: 'left'},
+            {lane: 1, constructor: 'logOrAlligator', moveRate: 11000, respawnRate: 5000, start: 'left'},
             {lane: 2, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, obj2: this.sprites.getTurtlesDiving, start: 'right'},
-            {lane: 3, constructor: Log, moveRate: 10000, respawnRate: 5000, obj: this.sprites.getLongLog, start: 'left'},
+            {lane: 3, constructor: Log, moveRate: 9000, respawnRate: 5000, obj: this.sprites.getLongLog, start: 'left'},
             {lane: 4, constructor: Log, moveRate: 14000, respawnRate: 6000, obj: this.sprites.getShortLog, start: 'left'},
             {lane: 5, constructor: Turtle, moveRate: 10000, respawnRate: 4000, obj: this.sprites.getTurtles, obj2: this.sprites.getTurtlesDiving, start: 'right'},
             {lane: 8, constructor: Car, moveRate: 13000, respawnRate: 7000, obj: this.sprites.getSemi, start: 'right'},
@@ -129,9 +130,11 @@ class Board {
 
         if (!this.frog.alive) {
             if (!this.frog.finished) {
+                this.gameOverMessage = "GAME OVER";
                 this.gameStatus.lost(this.frog.center);
             }
             else {
+                this.gameOverMessage = "YOU WON!";
                 this.gameStatus.safeArrival();
             }
             this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
