@@ -6,7 +6,8 @@ let mimeTypes = {
     '.html': 'text/html',
     '.css': 'text/css',
     '.png': 'image/png',
-    '.jpg': 'image/jpg'
+    '.jpg': 'image/jpg',
+    '.mp3': 'sound/mp3'
 };
 
 const port = 3005;

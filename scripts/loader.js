@@ -76,6 +76,34 @@ MyGame.loader = (function() {
         {
             key: 'alligatorSprites',
             source: '/assets/alligator.png'
+        },
+        {
+            key: 'hopSound',
+            source: '/assets/sound-frogger-hop.mp3'
+        },
+        {
+            key: 'squashSound',
+            source: '/assets/sound-frogger-squash.mp3'
+        },
+        {
+            key: 'plunkSound',
+            source: '/assets/sound-frogger-plunk.mp3'
+        },
+        {
+            key: 'levelUpSound',
+            source: '/assets/level_up.mp3'
+        },
+        {
+            key: 'clickSound',
+            source: '/assets/click.mp3'
+        },
+        {
+            key: 'backgroundSound',
+            source: '/assets/background.mp3'
+        },
+        {
+            key: 'menuSound',
+            source: '/assets/menu-music.mp3'
         }
     ];
 

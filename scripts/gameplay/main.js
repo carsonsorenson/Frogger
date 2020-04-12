@@ -1,4 +1,4 @@
-MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, input, renderer) {
+MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, input, renderer, assets) {
     let lastTime;
     let rows;
     let board;
@@ -14,6 +14,9 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
                     paused = true;
                     renderer.pause.initialize();
                     myInput.update(elapsedTime);
+                    board.pause();
+                    assets.menuSound.loop = true;
+                    assets.menuSound.play();
                 }
                 else {
                     board.processInput(key, elapsedTime);
@@ -28,6 +31,10 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
             gameOver = board.gameOver();
             board.update(elapsedTime);
         }
+        if (gameOver) {
+            assets.menuSound.loop = true;
+            assets.menuSound.play();
+        }
     }
 
     function render() {
@@ -37,6 +44,9 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         if (paused) {
             renderer.pause.render();
             paused = renderer.pause.stayPaused;
+            if (!paused) {
+                board.unPause();
+            }
             cancelNextFrame = renderer.pause.exit;
         }
         if (gameOver) {
@@ -64,7 +74,7 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         gameOver = false;
         cancelNextFrame = false;
         lastTime = performance.now();
-        board = new Board(rows, graphics, objects, renderer, persistence);
+        board = new Board(rows, graphics, objects, renderer, persistence, assets);
         requestAnimationFrame(gameLoop);
     }
 
@@ -77,4 +87,4 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         initialize,
         run
     }
-}(MyGame.game, MyGame.graphics, MyGame.objects, MyGame.persistence, MyGame.input, MyGame.render));
+}(MyGame.game, MyGame.graphics, MyGame.objects, MyGame.persistence, MyGame.input, MyGame.render, MyGame.assets));

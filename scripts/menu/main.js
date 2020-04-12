@@ -1,5 +1,13 @@
-MyGame.game = (function(screens) {
-    function showScreen(id) {
+MyGame.game = (function(screens, clickSound, menuSound) {
+    function showScreen(id, playSound=true) {
+        if (playSound) {
+            if (clickSound.paused) {
+                clickSound.play();
+            }
+            else {
+                clickSound.currentTime = 0;
+            }
+        }
         let active = document.getElementsByClassName('active');
         for (let i = 0; i < active.length; i++) {
             active[i].classList.remove('active');
@@ -35,7 +43,7 @@ MyGame.game = (function(screens) {
         for (screen in screens) {
             screens[screen].initialize(showScreen);
         }
-        showScreen('mainMenu');
+        showScreen('mainMenu', false);
     }
 
     return {
@@ -43,4 +51,4 @@ MyGame.game = (function(screens) {
         showScreen
     }
 
-}(MyGame.screens));
+}(MyGame.screens, MyGame.assets.clickSound, MyGame.assets.menuSound));

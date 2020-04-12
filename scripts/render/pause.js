@@ -1,4 +1,4 @@
-MyGame.render.pause = (function(graphics, game) {
+MyGame.render.pause = (function(graphics, game, menuSound) {
     let pause = document.getElementById("pauseGame");
     let madeBlock = false;
     let stayPaused = true;
@@ -23,6 +23,8 @@ MyGame.render.pause = (function(graphics, game) {
             pause.style.display = "none";
             exit = true;
             game.showScreen("mainMenu");
+            menuSound.currentTime = 0;
+            menuSound.pause();
         }
     )
 
@@ -30,6 +32,8 @@ MyGame.render.pause = (function(graphics, game) {
         'click', function() {
             pause.style.display = "none";
             stayPaused = false;
+            menuSound.currentTime = 0;
+            menuSound.pause();
         }
     )
 
@@ -39,4 +43,4 @@ MyGame.render.pause = (function(graphics, game) {
         render,
         initialize
     }
-}(MyGame.graphics, MyGame.game));
+}(MyGame.graphics, MyGame.game, MyGame.assets.menuSound));

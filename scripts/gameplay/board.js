@@ -1,15 +1,20 @@
 class Board {
-    constructor(numRows, graphics, objects, renderer, persistence) {
+    constructor(numRows, graphics, objects, renderer, persistence, assets) {
         this.numRows = numRows;
         this.objects = objects;
         this.renderer = renderer;
+        this.assets = assets;
+        this.backgroundSound = this.assets.backgroundSound;
+        this.backgroundSound.volume = 0.2;
+        this.backgroundSound.loop = true;
+        this.backgroundSound.play();
         this.setDimensions(graphics)
         window.addEventListener('resize', () => this.setDimensions(MyGame.graphics));
 
         this.drawSprite = graphics.drawSprite;
         this.objects = [];
         this.sprites = objects.sprites;
-        this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
+        this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets);
         this.gameStatus = new GameStatus(this.sprites, this.laneHeight, this.numRows, persistence);
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows, this.gameStatus);
         this.visited = this.frog.lane;
@@ -51,6 +56,14 @@ class Board {
         }
     }
 
+    pause() {
+        this.backgroundSound.pause();
+    }
+
+    unPause() {
+        this.backgroundSound.play();
+    }
+
     constructLane(spec, laneHeight, width) {
         if (spec.constructor === 'logOrAlligator') {
             if (Math.random() < this.alligatorFrequency) {
@@ -69,13 +82,19 @@ class Board {
 
     gameOver() {
         if (this.topRow.numFrogs === 5) {
+            this.backgroundSound.pause();
+            this.backgroundSound.currentTime = 0;
             this.gameStatus.won();
             return true;
         }
         else if (this.gameStatus.numLives === 0) {
+            this.backgroundSound.pause();
+            this.backgroundSound.currentTime = 0;
             return true;
         }
         else if (this.gameStatus.remainingTime <= 0) {
+            this.backgroundSound.pause();
+            this.backgroundSound.currentTime = 0;
             return true;
         }
         return false;
@@ -137,7 +156,7 @@ class Board {
                 this.gameOverMessage = "YOU WON!";
                 this.gameStatus.safeArrival();
             }
-            this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width);
+            this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets);
             this.gameStatus.reset();
             this.visited = this.frog.lane;
         }

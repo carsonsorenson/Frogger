@@ -1,9 +1,14 @@
 class Frog {
-    constructor(obj, laneHeight, width) {
+    constructor(obj, laneHeight, width, assets) {
         this.images = obj();
         this.laneHeight = laneHeight;
         this.lane = 13;
         this.width = width;
+
+        this.jumpingSound = assets.hopSound;
+        this.hitByCarSound = assets.squashSound;
+        this.inWaterSound = assets.plunkSound;
+        this.levelUpSound = assets.levelUpSound;
 
         this.center = {
             x: width / 2,
@@ -29,8 +34,18 @@ class Frog {
         this.elapsedTime = 0;
     }
 
+    play(audio) {
+        if (audio.paused) {
+            audio.play();
+        }
+        else {
+            audio.currentTime = 0;
+        }
+    }
+
     moveRight(elapsedTime) {
         if (!this.moving) {
+            this.play(this.jumpingSound);
             this.index = 6;
             this.moving = true;
             this.direction = 'right';
@@ -40,6 +55,7 @@ class Frog {
 
     moveLeft(elapsedTime) {
         if (!this.moving) {
+            this.play(this.jumpingSound);
             this.index = 3;
             this.moving = true;
             this.direction = 'left';
@@ -49,6 +65,7 @@ class Frog {
 
     moveDown(elapsedTime) {
         if (!this.moving && this.lane < 14) {
+            this.play(this.jumpingSound);
             this.index = 0;
             this.moving = true;
             this.direction = 'down';
@@ -59,6 +76,7 @@ class Frog {
 
     moveUp(elapsedTime) {
         if (!this.moving && this.lane > 0) {
+            this.play(this.jumpingSound);
             this.index = 9;
             this.moving = true;
             this.direction = 'up';
@@ -130,6 +148,10 @@ class Frog {
 
             if (collidedWith === null && this.lane >= 1 && this.lane <= 5) {
                 this.alive = false;
+                this.play(this.inWaterSound);
+            }
+            else if (collidedWith === 'car') {
+                this.play(this.hitByCarSound);
             }
 
             let frogRight = this.center.x + (this.size.width / 2);
@@ -145,6 +167,7 @@ class Frog {
                 let diff = Math.abs(this.center.x - delta);
 
                 if (diff < (this.size.width / 2) && topRow.objects[i].type === 'lilly' && topRow.objects[i].frog === null && !topRow.objects[i].alligator) {
+                    this.play(this.levelUpSound);
                     topRow.objects[i].frog = this;
                     this.finished = true;
                     topRow.numFrogs++;
