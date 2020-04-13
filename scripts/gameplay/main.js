@@ -59,6 +59,8 @@ MyGame.screens['gameplay'] = (function(game, graphics, objects, persistence, inp
         let elapsedTime = time - lastTime;
         lastTime = time;
 
+        //console.log((1 / elapsedTime) * 1000);
+
         processInput(elapsedTime);
         update(elapsedTime);
         render();

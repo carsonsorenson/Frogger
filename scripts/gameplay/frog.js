@@ -172,7 +172,7 @@ class Frog {
                     this.finished = true;
                     topRow.numFrogs++;
                     this.center.x = topRow.objects[i].center.x;
-                    this.center.y = topRow.objects[i].center.y;
+                    this.center.y = topRow.objects[i].center.y * 1.3;
                     this.index = 12;
                 }
             }

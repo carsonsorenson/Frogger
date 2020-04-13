@@ -17,6 +17,7 @@ class Board {
         this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets);
         this.gameStatus = new GameStatus(this.sprites, this.laneHeight, this.numRows, persistence);
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows, this.gameStatus);
+        this.particleSystem = new ParticleSystem();
         this.visited = this.frog.lane;
         this.alligatorFrequency = 0.5;
         this.gameOverMessage = "";
@@ -108,6 +109,7 @@ class Board {
         this.topRow.render(this.drawSprite);
         this.frog.render(this.drawSprite);
         this.gameStatus.render(this.renderer, this.topRow);
+        this.renderer.particles.render(this.particleSystem);
     }
 
     spawnObjects(elapsedTime) {
@@ -141,6 +143,7 @@ class Board {
         this.topRow.update(elapsedTime);
         this.frog.update(elapsedTime, this.objects, this.width, this.topRow);
         this.gameStatus.update(elapsedTime);
+        this.particleSystem.update(elapsedTime);
 
         if (this.gameStatus.remainingTime <= 0) {
             this.frog.alive = false;
@@ -154,6 +157,7 @@ class Board {
             else {
                 this.gameOverMessage = "YOU WON!";
                 this.gameStatus.safeArrival();
+                this.particleSystem.home(this.frog.center, this.frog.size);
             }
             this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets);
             this.gameStatus.reset();

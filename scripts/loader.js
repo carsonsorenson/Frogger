@@ -31,11 +31,15 @@ MyGame.loader = (function() {
             message: 'Objects loaded',
         },
         {
+            scripts: ['gameplay/random'],
+            message: 'Random loaded'
+        },
+        {
             scripts: ['render/graphics'],
             message: 'Graphics loaded'
         },
         {
-            scripts: ['render/frogLives', 'render/timeBar', 'render/score', 'render/gameOver', 'render/pause', 'render/death'],
+            scripts: ['render/frogLives', 'render/timeBar', 'render/score', 'render/gameOver', 'render/pause', 'render/death', 'render/particles'],
             message: 'Rendering loaded'
         },
         {
@@ -43,16 +47,16 @@ MyGame.loader = (function() {
             message: 'Gameplay base object loaded'
         },
         {
-            scripts: ['gameplay/log', 'gameplay/alligator', 'gameplay/car', 'gameplay/turtle', 'gameplay/frog', 'gameplay/topRow', 'gameplay/gameStatus'],
+            scripts: ['gameplay/log', 'gameplay/frog', 'gameplay/car', 'gameplay/alligator', 'gameplay/topRow', 'gameplay/turtle', 'gameplay/gameStatus', 'gameplay/particle'],
             message: 'Gameplay objects loaded'
+        },
+        {
+            scripts: ['gameplay/particleSystem'],
+            message: 'Particle System loaded'
         },
         {
             scripts: ['gameplay/board'],
             message: 'Gameplay board loaded'
-        },
-        {
-            scripts: ['gameplay/attract'],
-            message: 'Attract mode loaded'
         },
         {
             scripts: ['gameplay/main'],
