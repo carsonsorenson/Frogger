@@ -92,11 +92,6 @@ class Board {
             this.backgroundSound.currentTime = 0;
             return true;
         }
-        else if (this.gameStatus.remainingTime <= 0) {
-            this.backgroundSound.pause();
-            this.backgroundSound.currentTime = 0;
-            return true;
-        }
         return false;
     }
 
@@ -146,6 +141,10 @@ class Board {
         this.topRow.update(elapsedTime);
         this.frog.update(elapsedTime, this.objects, this.width, this.topRow);
         this.gameStatus.update(elapsedTime);
+
+        if (this.gameStatus.remainingTime <= 0) {
+            this.frog.alive = false;
+        }
 
         if (!this.frog.alive) {
             if (!this.frog.finished) {

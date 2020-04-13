@@ -27,8 +27,8 @@ class Frog {
         this.direction;
         this.newPos;
 
-        // move across cell in 1.8/10 of a second
-        this.moveRate = 180;
+        // move across cell in 1.5/10 of a second
+        this.moveRate = 150;
 
         this.cycleTime = 180;
         this.elapsedTime = 0;

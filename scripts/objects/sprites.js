@@ -109,7 +109,7 @@ MyGame.objects.sprites = (function(assets) {
                 frogSprites.push({
                     image: assets.frogSprites,
                     x: j * frogWidth,
-                    y: i * frogHeight,
+                    y: (i * frogHeight) + 5,
                     width: frogWidth,
                     height: frogHeight
                 })
