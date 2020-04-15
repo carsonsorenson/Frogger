@@ -48,7 +48,7 @@ MyGame.objects.sprites = (function(assets) {
             {image: assets.sprites, x: 448, y: spriteHeight + 5, width: 65, height: spriteHeight - 15},
             {image: assets.sprites, x: 513, y: spriteHeight + 5, width: 45, height: spriteHeight - 15},
             {image: assets.sprites, x: 560, y: spriteHeight + 5, width: 40, height: spriteHeight - 15},
-            {image: assets.sprites, x: 0, y: 0, width: 0, height: 0},
+            {image: assets.sprites, x: 0, y: 0, width: 1, height: 1},
             {image: assets.sprites, x: 560, y: spriteHeight + 5, width: 40, height: spriteHeight - 15},
             {image: assets.sprites, x: 513, y: spriteHeight + 5, width: 45, height: spriteHeight - 15},
             {image: assets.sprites, x: 448, y: spriteHeight + 5, width: 65, height: spriteHeight - 15},
