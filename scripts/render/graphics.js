@@ -96,6 +96,16 @@ MyGame.graphics = (function(assets, objects) {
         ctx.restore();
     }
 
+    function drawImage(spec) {
+        ctx.drawImage(
+            spec.image,
+            spec.center.x - spec.size.width / 2,
+            spec.center.y - spec.size.height / 2,
+            spec.size.width,
+            spec.size.height
+        )
+    }
+
     function resize() {
         let width = window.innerWidth * 0.9;
         let height = window.innerHeight * 0.9;
@@ -123,6 +133,7 @@ MyGame.graphics = (function(assets, objects) {
         drawLines,
         initialize,
         drawSprite,
+        drawImage,
         textWidth,
         drawText,
         drawRect,

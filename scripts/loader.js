@@ -82,6 +82,10 @@ MyGame.loader = (function() {
             source: '/assets/alligator.png'
         },
         {
+            key: 'slime',
+            source: '/assets/slime.png'
+        },
+        {
             key: 'hopSound',
             source: '/assets/sound-frogger-hop.mp3'
         },

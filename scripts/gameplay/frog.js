@@ -1,14 +1,16 @@
 class Frog {
-    constructor(obj, laneHeight, width, assets) {
+    constructor(obj, laneHeight, width, assets, particleSystem) {
         this.images = obj();
         this.laneHeight = laneHeight;
         this.lane = 13;
         this.width = width;
+        this.particleSystem = particleSystem;
 
         this.jumpingSound = assets.hopSound;
         this.hitByCarSound = assets.squashSound;
         this.inWaterSound = assets.plunkSound;
         this.levelUpSound = assets.levelUpSound;
+        this.frogExplodeImage = assets.slime;
 
         this.center = {
             x: width / 2,
@@ -152,6 +154,10 @@ class Frog {
             }
             else if (collidedWith === 'car') {
                 this.play(this.hitByCarSound);
+                this.particleSystem.explode({
+                    img: this.frogExplodeImage,
+                    center: this.center
+                });
             }
 
             let frogRight = this.center.x + (this.size.width / 2);

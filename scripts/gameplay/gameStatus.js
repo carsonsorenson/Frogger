@@ -28,6 +28,7 @@ class GameStatus {
     }
 
     won() {
+        console.log('I won');
         this.updateScore(1000);
     }
 
@@ -36,6 +37,7 @@ class GameStatus {
     }
 
     safeArrival() {
+        console.log('Safe arrival');
         // arriving safely home gets 50 points
         this.updateScore(50);
 

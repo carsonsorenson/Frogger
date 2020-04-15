@@ -14,10 +14,10 @@ class Board {
         this.drawSprite = graphics.drawSprite;
         this.objects = [];
         this.sprites = objects.sprites;
-        this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets);
+        this.particleSystem = new ParticleSystem();
+        this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets, this.particleSystem);
         this.gameStatus = new GameStatus(this.sprites, this.laneHeight, this.numRows, persistence);
         this.topRow = new TopRow(this.sprites, this.laneHeight, this.width, this.numRows, this.gameStatus);
-        this.particleSystem = new ParticleSystem();
         this.visited = this.frog.lane;
         this.alligatorFrequency = 0.5;
         this.gameOverMessage = "";
@@ -159,7 +159,7 @@ class Board {
                 this.gameStatus.safeArrival();
                 this.particleSystem.home(this.frog.center, this.frog.size);
             }
-            this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets);
+            this.frog = new Frog(this.sprites.getFrogs, this.laneHeight, this.width, this.assets, this.particleSystem);
             this.gameStatus.reset();
             this.visited = this.frog.lane;
         }
