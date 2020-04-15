@@ -88,7 +88,7 @@ class Turtle extends Object {
             }
         }
 
-        if (minTurtle.sinking && minTurtle.index > 2) {
+        if (minTurtle.sinking && minTurtle.index >= 3 && minTurtle.index <= 6) {
             return false;
         }
         else {
